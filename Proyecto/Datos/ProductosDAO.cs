@@ -1,26 +1,25 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Modelos;
+using MySql.Data.MySqlClient;
 
 namespace Datos
 {
-    public class InventarioDAO
+    public class ProductosDAO
     {
-
-        /*public XmlWriteModex getData(int ID)
+        public Producto getData(int ID)
         {
-            Inventario inv = null;
+            Producto prod = null;
             if (Conexion.Conectar())
             {
                 try
                 {
 
-                    String select = @"SELECT FROM INVENTARIO WHERE ID = @ID";
+                    String select = @"SELECT FROM PRODUCTS WHERE ID = @ID";
 
                     //Definir un datatable para que sea llenado
                     DataTable dt = new DataTable();
@@ -40,24 +39,18 @@ namespace Datos
                     if (dt.Rows.Count > 0)
                     {
                         DataRow fila = dt.Rows[0];
-                        inv = new Inventario()
+                        prod = new Producto()
                         {
                             ID = Convert.ToInt32(fila["ID"]),
-                            NOMBRECORTO = fila["NOMBRECORTO"].ToString(),
+                            NOMBRE = fila["NOMBRE"].ToString(),
+                            PRECIO = Convert.ToDouble(fila["PRECIO"]),
                             DESCRIPCION = fila["DESCRIPCION"].ToString(),
-                            SERIE = fila["SERIE"].ToString(),
-                            COLOR = fila["COLOR"].ToString(),
-                            FECHAADQUISICION = fila["FECHAADQUISICION"].ToString(),
-                            TIPOADQUISICION = fila["TIPOADQUISICION"].ToString(),
-                            OBSERVACIONES = fila["OBSERVACIONES"].ToString(),
-                            AREAS_ID = Convert.ToInt32(fila["AREAS_ID"]),
-
-
+                            CATEGORIA = fila["CATEGORIA"].ToString()
                         };
 
                     }
 
-                    return inv;
+                    return prod;
 
                 }
                 finally
@@ -70,16 +63,17 @@ namespace Datos
                 return null;
             }
         }
-        public List<Inventario> getAllData()
+
+        public List<Producto> getAllData()
         {
-            
-            List<Inventario> invList = new List<Inventario>();
+
+            List<Producto> invProd = new List<Producto>();
             if (Conexion.Conectar())
             {
                 try
                 {
 
-                    String select = @"SELECT * FROM INVENTARIO";
+                    String select = @"SELECT * FROM PRODUCTS";
 
                     //Definir un datatable para que sea llenado
                     DataTable dt = new DataTable();
@@ -99,27 +93,23 @@ namespace Datos
                     {
                         foreach (DataRow fila in dt.Rows)
                         {
-                            Inventario inv = new Inventario()
+                            Producto prod = new Producto()
                             {
                                 ID = Convert.ToInt32(fila["ID"]),
-                                NOMBRECORTO = fila["NOMBRECORTO"].ToString(),
+                                NOMBRE = fila["NOMBRE"].ToString(),
+                                PRECIO = Convert.ToDouble(fila["PRECIO"]),
                                 DESCRIPCION = fila["DESCRIPCION"].ToString(),
-                                SERIE = fila["SERIE"].ToString(),
-                                COLOR = fila["COLOR"].ToString(),
-                                FECHAADQUISICION = fila["FECHAADQUISICION"].ToString(),
-                                TIPOADQUISICION = fila["TIPOADQUISICION"].ToString(),
-                                OBSERVACIONES = fila["OBSERVACIONES"].ToString(),
-                                AREAS_ID = Convert.ToInt32(fila["AREAS_ID"]),
+                                CATEGORIA = fila["CATEGORIA"].ToString()
 
 
                             };
-                            invList.Add(inv);
+                            invProd.Add(prod);
                         }
 
                     }
 
-                    return invList;
-                    
+                    return invProd;
+
                 }
                 finally
                 {
@@ -131,28 +121,27 @@ namespace Datos
                 return null;
             }
         }
-        public Boolean insert(Inventario inv)
+
+
+        public Boolean insert(Producto prod)
         {
-           
+
             if (Conexion.Conectar())
             {
                 try
                 {
 
-                    String select = @"INSERT INTO INVENTARIO(NOMBRECORTO, DESCRIPCION, SERIE, COLOR, FECHAADQUISICION, TIPOADQUISICION, OBSERVACIONES, AREAS_ID)" +
-                        " VALUES(@NOMBRECORTO, @DESCRIPCION, @SERIE, @COLOR, @FECHAADQUISICION, @TIPOADQUISICION, @OBSERVACIONES, @AREAS_ID);";
+                    String select = @"INSERT INTO PRODUCTS (NOMBRE, DESCRIPCION, PRECIO, CATEGORIA)"+
+                        "VALUES (@NOMBRE,@DESCRIPCION,@PRECIO,@CATEGORIA);";
 
                     //Crear el dataadapter
                     MySqlCommand sentencia = new MySqlCommand(select);
                     //Asignar los parámetros
-                    sentencia.Parameters.AddWithValue("@NOMBRECORTO", inv.NOMBRECORTO);
-                    sentencia.Parameters.AddWithValue("@DESCRIPCION", inv.DESCRIPCION);
-                    sentencia.Parameters.AddWithValue("@SERIE", inv.SERIE);
-                    sentencia.Parameters.AddWithValue("@COLOR", inv.COLOR);
-                    sentencia.Parameters.AddWithValue("@FECHAADQUISICION", inv.FECHAADQUISICION);
-                    sentencia.Parameters.AddWithValue("@TIPOADQUISICION", inv.TIPOADQUISICION);
-                    sentencia.Parameters.AddWithValue("@OBSERVACIONES", inv.OBSERVACIONES);
-                    sentencia.Parameters.AddWithValue("@AREAS_ID", inv.AREAS_ID);
+                    sentencia.Parameters.AddWithValue("@NOMBRE", prod.NOMBRE);
+                    sentencia.Parameters.AddWithValue("@DESCRIPCION", prod.DESCRIPCION);
+                    sentencia.Parameters.AddWithValue("@PRECIO", prod.PRECIO);
+                    sentencia.Parameters.AddWithValue("@CATEGORIA", prod.CATEGORIA);
+                   
 
 
                     sentencia.Connection = Conexion.conexion;
@@ -171,37 +160,32 @@ namespace Datos
             }
 
         }
-        public Boolean update(Inventario inv)
+
+
+        public Boolean update(Producto prod)
         {
-           
+
             if (Conexion.Conectar())
             {
                 try
                 {
 
-                    String select = @"UPDATE INVENTARIO
-                                        SET NOMBRECORTO = @NOMBRECORTO," +
-                                            "DESCRIPCION = @DESCRIPCION," +
-                                            "SERIE = @SERIE," +
-                                            "COLOR = @COLOR," +
-                                            "FECHAADQUISICION = @FECHAADQUISICION," +
-                                            "TIPOADQUISICION = @TIPOADQUISICION," +
-                                            "OBSERVACIONES = @OBSERVACIONES," +
-                                            "AREAS_ID = @AREAS_ID " +
-                                        "WHERE ID = @ID";
+                    String select = @"UPDATE PRODUCTS "+
+                                        "SET NOMBRE = @NOMBRE,"+
+                                        "DESCRIPCION = @DESCRIPCION,"+ 
+                                        "PRECIO = @PRECIO,"+
+                                        "CATEGORIA = @CATEGORIA "+
+                                      "WHERE ID = @ID";
+
 
                     //Crear el dataadapter
                     MySqlCommand sentencia = new MySqlCommand(select);
                     //Asignar los parámetros
-                    sentencia.Parameters.AddWithValue("@ID", inv.ID);
-                    sentencia.Parameters.AddWithValue("@NOMBRECORTO", inv.NOMBRECORTO);
-                    sentencia.Parameters.AddWithValue("@DESCRIPCION", inv.DESCRIPCION);
-                    sentencia.Parameters.AddWithValue("@SERIE", inv.SERIE);
-                    sentencia.Parameters.AddWithValue("@COLOR", inv.COLOR);
-                    sentencia.Parameters.AddWithValue("@FECHAADQUISICION", inv.FECHAADQUISICION);
-                    sentencia.Parameters.AddWithValue("@TIPOADQUISICION", inv.TIPOADQUISICION);
-                    sentencia.Parameters.AddWithValue("@OBSERVACIONES", inv.OBSERVACIONES);
-                    sentencia.Parameters.AddWithValue("@AREAS_ID", inv.AREAS_ID);
+                    sentencia.Parameters.AddWithValue("@NOMBRE", prod.NOMBRE);
+                    sentencia.Parameters.AddWithValue("@DESCRIPCION", prod.DESCRIPCION);
+                    sentencia.Parameters.AddWithValue("@PRECIO", prod.PRECIO);
+                    sentencia.Parameters.AddWithValue("@CATEGORIA", prod.CATEGORIA);
+                    sentencia.Parameters.AddWithValue("@ID", prod.ID);
 
 
 
@@ -221,6 +205,8 @@ namespace Datos
             }
 
         }
+
+
         public Boolean delete(int ID)
         {
 
@@ -229,7 +215,7 @@ namespace Datos
                 try
                 {
 
-                    String select = @"DELETE FROM INVENTARIO WHERE ID = @ID";
+                    String select = @"DELETE FROM PRODUCTS WHERE ID = @ID";
 
                     //Crear el dataadapter
                     MySqlCommand sentencia = new MySqlCommand(select);
@@ -253,6 +239,8 @@ namespace Datos
                 return false;
             }
 
-        }*/
+        }
     }
+
+   
 }

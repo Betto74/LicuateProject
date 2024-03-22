@@ -11,7 +11,7 @@ namespace Modelos
         public int ID { get; set; }
         public String NOMBRE { get; set; }
         public String DESCRIPCION { get; set; }
-        public double Precio { get; set; }
+        public double PRECIO { get; set; }
         public string CATEGORIA{ get; set; }
     }
 }
