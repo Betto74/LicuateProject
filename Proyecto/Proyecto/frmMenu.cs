@@ -22,5 +22,11 @@ namespace PROYECTO_U3
             r.RedondearBoton(btnProductos, 30);
             r.RedondearBoton(btnCorte, 30);
         }
+
+        private void btnRegistrar_Click(object sender, EventArgs e)
+        {
+            frmRegistrar frmRegistrar = new frmRegistrar();
+            frmRegistrar.Show();
+        }
     }
 }
