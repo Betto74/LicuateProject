@@ -44,6 +44,7 @@ namespace PROYECTO_U3
             if (consultas.register(txtNombre.Text, txtUser.Text, txtPassword.Text))
             {
                 MessageBox.Show(this, "Se ha registrado correctamente");
+                this.Close ();
             }
             else
             {

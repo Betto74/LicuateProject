@@ -20,8 +20,8 @@ namespace Datos
                 try
                 {
 
-                    String select = @"INSERT INTO USUARIOS (NOMBRE, USERNAME, PASSWORD)" +
-                        "VALUES (@NOMBRE,@USERNAME,SHA2(@PASSWORD,256));";
+                    String select = @"INSERT INTO USUARIOS (NOMBRE, USERNAME, PASSWORD,CARGO)" +
+                        "VALUES (@NOMBRE,@USERNAME,SHA2(@PASSWORD,256),1);";
 
                     //Crear el dataadapter
                     MySqlCommand sentencia = new MySqlCommand(select);
@@ -78,6 +78,51 @@ namespace Datos
             else
             {
                 return -1;
+            }
+
+        }
+
+
+        public bool admin(String USERNAME, String PASSWORD)
+        {
+
+            if (Conexion.Conectar())
+            {
+                try
+                {
+
+                    String select = @"SELECT * FROM USUARIOS
+                                    where USERNAME = @USERNAME and PASSWORD = SHA2(@PASSWORD,256) and CARGO = 'Admin';";
+
+                    //Crear el dataadapter
+                    MySqlCommand sentencia = new MySqlCommand(select);
+                    //Asignar los parámetros
+                    sentencia.Parameters.AddWithValue("@USERNAME", USERNAME);
+                    sentencia.Parameters.AddWithValue("@PASSWORD", PASSWORD);
+
+                    sentencia.Connection = Conexion.conexion;
+
+                    using (MySqlDataReader reader = sentencia.ExecuteReader())
+                    {
+                        // Si el lector tiene alguna fila, significa que se encontró un usuario con las características especificadas
+                        if (reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                finally
+                {
+                    Conexion.Desconectar();
+                }
+            }
+            else
+            {
+                return false;
             }
 
         }

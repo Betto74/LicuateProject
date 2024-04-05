@@ -1,0 +1,242 @@
+﻿using Modelos;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Data;
+using MySql.Data.MySqlClient;
+namespace Datos
+{
+    public class VentasDAO
+    {
+        public Venta getData(int ID)
+        {
+            Venta venta = new Venta();
+            if (Conexion.Conectar())
+            {
+                try
+                {
+
+                    String select = @"SELECT FROM ORDEN WHERE ID = @ID";
+
+                    //Definir un datatable para que sea llenado
+                    DataTable dt = new DataTable();
+                    //Crear el dataadapter
+                    MySqlCommand sentencia = new MySqlCommand(select);
+                    sentencia.Parameters.AddWithValue("@ID", ID);
+
+                    sentencia.Connection = Conexion.conexion;
+
+                    MySqlDataAdapter da = new MySqlDataAdapter(sentencia);
+
+
+                    //Llenar el datatable
+                    da.Fill(dt);
+
+                    //Revisar si hubo resultados
+                    if (dt.Rows.Count > 0)
+                    {
+                        DataRow fila = dt.Rows[0];
+                        venta = new Venta()
+                        {
+                            ID = Convert.ToInt32(fila["ID"]),
+                            FECHA = Convert.ToDateTime(fila["FECHA"]),
+                            MONTO = Convert.ToDouble(fila["MONTO"]),
+                            ID_USUARIO = Convert.ToInt32(fila["ID_USUARIO"]),
+                            ID_CLIENTE = Convert.ToInt32(fila["ID_CLIENTE"])
+                        };
+
+                    }
+
+                    return venta;
+
+                }
+                finally
+                {
+                    Conexion.Desconectar();
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public List<Venta> getAllData()
+        {
+
+            List<Venta> lista = new List<Venta>();
+            if (Conexion.Conectar())
+            {
+                try
+                {
+
+                    String select = @"SELECT * FROM ORDEN";
+
+                    //Definir un datatable para que sea llenado
+                    DataTable dt = new DataTable();
+                    //Crear el dataadapter
+                    MySqlCommand sentencia = new MySqlCommand(select);
+
+
+                    sentencia.Connection = Conexion.conexion;
+
+                    MySqlDataAdapter da = new MySqlDataAdapter(sentencia);
+
+                    //Llenar el datatable
+                    da.Fill(dt);
+
+                    //Revisar si hubo resultados
+                    if (dt.Rows.Count > 0)
+                    {
+                        foreach (DataRow fila in dt.Rows)
+                        {
+                            Venta venta = new Venta()
+                            {
+                                ID = Convert.ToInt32(fila["ID"]),
+                                FECHA = Convert.ToDateTime(fila["FECHA"]),
+                                MONTO = Convert.ToDouble(fila["MONTO"]),
+                                ID_USUARIO = Convert.ToInt32(fila["ID_USUARIO"]),
+                                ID_CLIENTE = Convert.ToInt32(fila["ID_CLIENTE"])
+                            };
+                            lista.Add(venta);
+                        }
+
+                    }
+
+                    return lista;
+
+                }
+                finally
+                {
+                    Conexion.Desconectar();
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public Boolean insert(Venta venta)
+        {
+
+            if (Conexion.Conectar())
+            {
+                try
+                {
+
+                    String select = @"INSERT INTO ORDEN (ID, FECHA, MONTO, ID_USUARIO, ID_CLIENTE)" +
+                        "VALUES (@ID,@FECHA,@MONTO,@ID_USUARIO,@ID_CLIENTE);";
+
+                    //Crear el dataadapter
+                    MySqlCommand sentencia = new MySqlCommand(select);
+                    //Asignar los parámetros
+                    sentencia.Parameters.AddWithValue("@ID", venta.ID);
+                    sentencia.Parameters.AddWithValue("@FECHA", venta.FECHA);
+                    sentencia.Parameters.AddWithValue("@MONTO", venta.MONTO);
+                    sentencia.Parameters.AddWithValue("@ID_USUARIO", venta.ID_USUARIO);
+                    sentencia.Parameters.AddWithValue("@ID_CLIENTE", venta.ID_CLIENTE);
+
+
+
+                    sentencia.Connection = Conexion.conexion;
+
+                    sentencia.ExecuteNonQuery();
+                    return true;
+                }
+                finally
+                {
+                    Conexion.Desconectar();
+                }
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        public Boolean update(Venta venta)
+        {
+
+            if (Conexion.Conectar())
+            {
+                try
+                {
+
+                    String select = @"UPDATE ORDEN " +                                       
+                                        "FECHA = @FECHA," +
+                                        "MONTO = @MONTO," +
+                                        "ID_USUARIO = @ID_USUARIO," +
+                                        "ID_CLIENTE = @ID_CLIENTE" +
+                                      "WHERE ID = @ID";
+
+
+                    //Crear el dataadapter
+                    MySqlCommand sentencia = new MySqlCommand(select);
+                    //Asignar los parámetros
+                    
+                    sentencia.Parameters.AddWithValue("@FECHA", venta.FECHA);
+                    sentencia.Parameters.AddWithValue("@MONTO", venta.MONTO);
+                    sentencia.Parameters.AddWithValue("@ID_USUARIO", venta.ID_USUARIO);
+                    sentencia.Parameters.AddWithValue("@ID_CLIENTE", venta.ID_CLIENTE);
+
+
+
+                    sentencia.Connection = Conexion.conexion;
+
+                    sentencia.ExecuteNonQuery();
+                    return true;
+                }
+                finally
+                {
+                    Conexion.Desconectar();
+                }
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        public Boolean delete(int ID)
+        {
+
+            if (Conexion.Conectar())
+            {
+                try
+                {
+
+                    String select = @"DELETE FROM ORDEN WHERE ID = @ID";
+
+                    //Crear el dataadapter
+                    MySqlCommand sentencia = new MySqlCommand(select);
+                    //Asignar los parámetros
+                    sentencia.Parameters.AddWithValue("@ID", ID);
+
+
+
+                    sentencia.Connection = Conexion.conexion;
+
+                    sentencia.ExecuteNonQuery();
+                    return true;
+                }
+                finally
+                {
+                    Conexion.Desconectar();
+                }
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+    }
+
+    
+
+}

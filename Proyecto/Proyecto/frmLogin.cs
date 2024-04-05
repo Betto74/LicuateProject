@@ -17,7 +17,7 @@ namespace PROYECTO_U3
         public frmLogin()
         {
             InitializeComponent();
-          
+            this.KeyPreview = true;
             Redondear r = new Redondear();
             r.RedondearPicture(ptbBack, 40);
             r.RedondearBoton(btnAceptar, 30);
@@ -27,9 +27,19 @@ namespace PROYECTO_U3
             
 
         }
-
+        
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            aceptar();
+        }
+
+        
+
+        
+
+        private void aceptar()
+        {
+
             if (txtUser.Text.Equals("") || txtPassword.Text.Equals(""))
             {
                 MessageBox.Show(this, "No pueden existir campos vacios");
@@ -37,16 +47,31 @@ namespace PROYECTO_U3
             }
 
             LoginDAO consultas = new LoginDAO();
-            if (consultas.Login(txtUser.Text,txtPassword.Text) > 0)
+            if (consultas.Login(txtUser.Text, txtPassword.Text) > 0)
             {
-                frmMenu frmMenu = new frmMenu();
-                frmMenu.ShowDialog();
+               if(consultas.admin(txtUser.Text, txtPassword.Text) == true)
+                {
+                    this.Hide();
+                    frmMenu frmMenu = new frmMenu(true);
+                    txtPassword.Text = "";
+                    frmMenu.Show();
+                }
+                else
+                {
+                    this.Hide();
+                    frmMenu frmMenu = new frmMenu(false);
+                    txtPassword.Text = "";
+                    frmMenu.Show();
+                }
+                
             }
             else
             {
                 MessageBox.Show(this, "El usuario o el password son incorrectos");
             }
         }
+        
+       
     }
 
 }

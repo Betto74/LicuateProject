@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Modelos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,6 +23,21 @@ namespace PROYECTO_U3
             r.RedondearBoton(btnEditar, 30);
             r.RedondearBoton(btnEliminar, 30);
             r.RedondearBoton(btnVolver, 30);
+        }
+
+
+
+
+        private void fillData(Venta v)
+        {
+            
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            frmVenta frm = new frmVenta(false);
+            frm.Show();
         }
     }
 }
