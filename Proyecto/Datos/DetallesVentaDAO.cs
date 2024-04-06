@@ -70,5 +70,87 @@ namespace Datos
                 return null;
             }
         }
+
+
+        public Boolean insert(List<DetallesVenta> detalles)
+        {
+
+            if (Conexion.Conectar())
+            {
+                try
+                {
+
+                    String select = @"INSERT INTO DETALLES_ORDEN (ID_ORDEN, ID_PRODUCTO, PRECIOUNITARIO, PRECIOCONEXTRA, CANTIDAD, COMENTARIOS)"+
+                                    " VALUES (@ID_ORDEN, @ID_PRODUCTO, @PRECIOUNITARIO, @PRECIOCONEXTRA, @CANTIDAD, @COMENTARIOS);";
+
+                    //Crear el dataadapter
+                    MySqlCommand sentencia = new MySqlCommand(select);
+                    //Asignar los parámetros
+                    sentencia.Connection = Conexion.conexion;
+                    for ( int i =0; i < detalles.Count(); i++)
+                    {
+                        sentencia.Parameters.AddWithValue("@ID_ORDEN", detalles[i].ID_ORDEN);
+                        sentencia.Parameters.AddWithValue("@ID_PRODUCTO", detalles[i].ID_PRODUCTO);
+                        sentencia.Parameters.AddWithValue("@PRECIOUNITARIO", detalles[i].PRECIOUNITARIO);
+                        sentencia.Parameters.AddWithValue("@PRECIOCONEXTRA", detalles[i].PRECIOCONEXTRA);
+                        sentencia.Parameters.AddWithValue("@CANTIDAD", detalles[i].CANTIDAD);
+                        sentencia.Parameters.AddWithValue("@COMENTARIOS", detalles[i].COMENTARIOS);
+
+                        
+
+                        sentencia.ExecuteNonQuery();
+                    }
+                    
+
+
+
+                    
+                    return true;
+                }
+                finally
+                {
+                    Conexion.Desconectar();
+                }
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        public Boolean delete(int ID)
+        {
+
+            if (Conexion.Conectar())
+            {
+                try
+                {
+
+                    String select = @"DELETE FROM DETALLES_ORDEN WHERE ID_ORDEN = @ID";
+
+                    //Crear el dataadapter
+                    MySqlCommand sentencia = new MySqlCommand(select);
+                    //Asignar los parámetros
+                    sentencia.Parameters.AddWithValue("@ID", ID);
+
+
+
+                    sentencia.Connection = Conexion.conexion;
+
+                    sentencia.ExecuteNonQuery();
+                    return true;
+                }
+                finally
+                {
+                    Conexion.Desconectar();
+                }
+            }
+            else
+            {
+                return false;
+            }
+
+        }
     }
 }

@@ -9,12 +9,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Datos;
+using Modelos;
 
 namespace PROYECTO_U3
 {
     public partial class frmLogin : Form
     {
         private bool cargo;
+        public Usuario user;
         public frmLogin()
         {
             InitializeComponent();
@@ -30,10 +32,6 @@ namespace PROYECTO_U3
             aceptar();
         }
 
-        
-
-        
-
         private void aceptar()
         {
 
@@ -44,21 +42,16 @@ namespace PROYECTO_U3
             }
 
             LoginDAO consultas = new LoginDAO();
-            if (consultas.Login(txtUser.Text, txtPassword.Text) > 0)
+            user = consultas.getUser(txtUser.Text,txtPassword.Text);
+            
+            if (user != null)
             {
-                cargo = consultas.admin(txtUser.Text, txtPassword.Text);
-                if ( cargo == true)
-                {
-                    this.Hide();
-                    frmMenu frmMenu = new frmMenu(true,this);
-                    frmMenu.Show();
-                }
-                else
-                {
-                    this.Hide();
-                    frmMenu frmMenu = new frmMenu(false,this);
-                    frmMenu.Show();
-                }
+                
+                
+                this.Hide();
+                frmMenu frmMenu = new frmMenu(this);
+                frmMenu.Show();
+                
                 txtPassword.Text = "";
                 txtUser.Text = "";
             }

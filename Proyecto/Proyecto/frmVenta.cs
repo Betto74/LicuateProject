@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -16,19 +17,31 @@ namespace PROYECTO_U3
     public partial class frmVenta : Form
     {
         List<Venta> ventas;
-        public frmVenta(bool corte)
+        frmLogin login;
+        bool corte;
+        public frmVenta(bool corte,frmLogin login)
         {
             InitializeComponent();
-
-            if (corte)
+            
+            if (!corte)
             {
-
+                ventas = new VentasDAO().getAllData();
+                Initialize(ventas);
+                lblCant.Visible = false;
+                lblCantidad.Visible= false;
+                lblPTotal.Visible= false;
+                lblTotal.Visible= false;
             }
-            else 
+            else
             {
-                Initialize();
+                btnTodo.Visible = false;
+                btnAgregar.Visible = false;
+                btnEditar.Visible = false;
+                btnEliminar.Visible = false;
+                btnFiltrar.Text = "Generar";
             }
-
+            this.corte = corte;
+            this.login = login;
         }
 
 
@@ -37,9 +50,9 @@ namespace PROYECTO_U3
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             
-            frmAEVenta frm = new frmAEVenta(-1);
+            frmAEVenta frm = new frmAEVenta(-1,login);
             frm.Show();
-            this.Hide();
+            this.Close();
         }
 
         private void dgvVentas_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -49,14 +62,26 @@ namespace PROYECTO_U3
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-          //  this.Hide();
-          //  frmMenu menu = new frmMenu(false);
-          //  menu.Show();
+            
+            frmMenu menu = new frmMenu(login);
+            menu.Show();
+            this.Close();
         }
 
         private void btnVer_Click(object sender, EventArgs e)
         {
+            DateTime fechaI = dtpInicio.Value, fechaF = dtpFin.Value;
+            string fechaInicio = fechaI.ToString("yyyy-MM-dd");
+            string fechaFin = fechaF.ToString("yyyy-MM-dd");
 
+
+            List<Venta> filtroVentas = new VentasDAO().getRange(fechaInicio,fechaFin);
+            Initialize(filtroVentas);
+
+            if (corte) { 
+                lblCant.Text = filtroVentas.Count.ToString();
+                lblPTotal.Text = "$"+  filtroVentas.Sum(objeto => objeto.MONTO);
+            }
         }
 
         
@@ -71,9 +96,9 @@ namespace PROYECTO_U3
                 int index = dgvVentas.SelectedRows[0].Index;
                 int id = Convert.ToInt32(dgvVentas.Rows[index].Cells[0].Value);
                 
-                frmAEVenta frm = new frmAEVenta(id);
+                frmAEVenta frm = new frmAEVenta(id,login);
                 frm.Show();
-                this.Hide();
+                this.Close();
 
             }
             else
@@ -121,9 +146,9 @@ namespace PROYECTO_U3
             
 
         }
-        public void Initialize()
+        public void Initialize(List<Venta> ventas)
         {
-            ventas = new VentasDAO().getAllData();
+            
             dgvVentas.DataSource = ventas;
             dgvVentas.AllowUserToDeleteRows = false;
             dgvVentas.EditMode = DataGridViewEditMode.EditProgrammatically;
@@ -132,6 +157,15 @@ namespace PROYECTO_U3
             dgvVentas.ClearSelection();
 
 
+        }
+
+        private void frmVenta_FormClosing(object sender, FormClosingEventArgs e)
+        {
+        }
+
+        private void btnTodo_Click(object sender, EventArgs e)
+        {
+            Initialize(ventas);
         }
     }
 }

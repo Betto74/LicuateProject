@@ -120,6 +120,70 @@ namespace Datos
             }
         }
 
+        public List<Venta> getRange(String FECHAINICIO, String FECHAFIN)
+        {
+
+            List<Venta> lista = new List<Venta>();
+            if (Conexion.Conectar())
+            {
+                try
+                {
+
+                    String select = @"SELECT O.ID, O.FECHA, O.MONTO, O.ID_CLIENTE, U.NOMBRE"
+                                    + " FROM ORDEN O JOIN USUARIOS U ON O.ID_USUARIO = U.ID" +
+                                    " WHERE DATE(FECHA)>=@FECHAINICIO && DATE(FECHA)<=@FECHAFIN" +
+                                    " ORDER BY O.FECHA;";
+
+
+
+                    //Definir un datatable para que sea llenado
+                    DataTable dt = new DataTable();
+                    //Crear el dataadapter
+                    MySqlCommand sentencia = new MySqlCommand(select);
+
+                    sentencia.Parameters.AddWithValue("@FECHAINICIO", FECHAINICIO);
+                    sentencia.Parameters.AddWithValue("@FECHAFIN", FECHAFIN);
+
+
+                    sentencia.Connection = Conexion.conexion;
+
+                    MySqlDataAdapter da = new MySqlDataAdapter(sentencia);
+
+                    //Llenar el datatable
+                    da.Fill(dt);
+
+                    //Revisar si hubo resultados
+                    if (dt.Rows.Count > 0)
+                    {
+                        foreach (DataRow fila in dt.Rows)
+                        {
+                            Venta venta = new Venta()
+                            {
+                                ID = Convert.ToInt32(fila["ID"]),
+                                FECHA = Convert.ToDateTime(fila["FECHA"]),
+                                MONTO = Convert.ToDouble(fila["MONTO"]),
+                                ID_CLIENTE = Convert.ToInt32(fila["ID_CLIENTE"]),
+                                NOMBRE_USUARIO = fila["NOMBRE"].ToString()
+                            };
+                            lista.Add(venta);
+                        }
+
+                    }
+
+                    return lista;
+
+                }
+                finally
+                {
+                    Conexion.Desconectar();
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public Boolean insert(Venta venta)
         {
 
@@ -159,7 +223,7 @@ namespace Datos
 
         }
 
-        public Boolean update(Venta venta)
+        public Boolean update(double MONTO)
         {
 
             if (Conexion.Conectar())
@@ -167,23 +231,17 @@ namespace Datos
                 try
                 {
 
-                    String select = @"UPDATE ORDEN " +                                       
-                                        "FECHA = @FECHA," +
+                    String select = @"UPDATE ORDEN " +                                                                           
                                         "MONTO = @MONTO," +
-                                        "ID_USUARIO = @ID_USUARIO," +
-                                        "ID_CLIENTE = @ID_CLIENTE" +
                                       "WHERE ID = @ID";
 
 
                     //Crear el dataadapter
                     MySqlCommand sentencia = new MySqlCommand(select);
                     //Asignar los parámetros
-                    
-                    sentencia.Parameters.AddWithValue("@FECHA", venta.FECHA);
-                    sentencia.Parameters.AddWithValue("@MONTO", venta.MONTO);
-                    sentencia.Parameters.AddWithValue("@ID_USUARIO", venta.ID_USUARIO);
-                    sentencia.Parameters.AddWithValue("@ID_CLIENTE", venta.ID_CLIENTE);
-
+             
+                    sentencia.Parameters.AddWithValue("@MONTO", MONTO);
+                  
 
 
                     sentencia.Connection = Conexion.conexion;
@@ -257,7 +315,7 @@ namespace Datos
                     // Verificar si el resultado no es nulo y convertirlo a entero
                     if (resultado != null && resultado != DBNull.Value)
                     {
-                        ultimoID = Convert.ToInt32(resultado);
+                        ultimoID = Convert.ToInt32(resultado)+1;
                     }
                     else {
                         ultimoID = -1;
@@ -273,6 +331,45 @@ namespace Datos
             return ultimoID;
 
             
+        }
+
+        public int getCliente()
+        {
+            int ultimoID = 0;
+
+            if (Conexion.Conectar())
+            {
+                try
+                {
+                    // Crear la sentencia SQL para obtener el último ID
+                    string select = @"SELECT ID_CLIENTE FROM ORDEN ORDER BY ID DESC LIMIT 1;";
+
+                    // Crear el comando y asignar la sentencia SQL y la conexión
+                    MySqlCommand comando = new MySqlCommand(select, Conexion.conexion);
+
+                    // Ejecutar la consulta y obtener el resultado
+                    object resultado = comando.ExecuteScalar();
+
+                    // Verificar si el resultado no es nulo y convertirlo a entero
+                    if (resultado != null && resultado != DBNull.Value)
+                    {
+                        ultimoID = Convert.ToInt32(resultado)+1;
+                    }
+                    else
+                    {
+                        ultimoID = -1;
+                    }
+
+                }
+                finally
+                {
+                    // Desconectar la base de datos
+                    Conexion.Desconectar();
+                }
+            }
+            return ultimoID;
+
+
         }
 
     }

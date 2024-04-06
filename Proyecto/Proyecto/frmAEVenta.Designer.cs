@@ -45,12 +45,12 @@
             this.btnEliminar = new System.Windows.Forms.Button();
             this.btnVolver = new System.Windows.Forms.Button();
             this.btnAgregar = new System.Windows.Forms.Button();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
+            this.lblPIva = new System.Windows.Forms.Label();
+            this.lblPSub = new System.Windows.Forms.Label();
+            this.lblIVA = new System.Windows.Forms.Label();
+            this.lblSub = new System.Windows.Forms.Label();
+            this.lblPTotal = new System.Windows.Forms.Label();
+            this.lblTotal = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrden)).BeginInit();
             this.SuspendLayout();
@@ -153,6 +153,7 @@
             this.cbxCategoria.Name = "cbxCategoria";
             this.cbxCategoria.Size = new System.Drawing.Size(161, 25);
             this.cbxCategoria.TabIndex = 7;
+            this.cbxCategoria.SelectedIndexChanged += new System.EventHandler(this.cbxCategoria_SelectedIndexChanged_1);
             // 
             // cbxProducto
             // 
@@ -202,6 +203,7 @@
             this.btnAceptar.TabIndex = 12;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = false;
+            this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
             // btnEditar
             // 
@@ -229,6 +231,7 @@
             this.btnEliminar.TabIndex = 14;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = false;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // btnVolver
             // 
@@ -254,81 +257,81 @@
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(86, 36);
             this.btnAgregar.TabIndex = 16;
-            this.btnAgregar.Text = "Aceptar";
+            this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = false;
             this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
-            // label10
+            // lblPIva
             // 
-            this.label10.AutoSize = true;
-            this.label10.BackColor = System.Drawing.Color.Transparent;
-            this.label10.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(135, 383);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(19, 21);
-            this.label10.TabIndex = 27;
-            this.label10.Text = "$";
+            this.lblPIva.AutoSize = true;
+            this.lblPIva.BackColor = System.Drawing.Color.Transparent;
+            this.lblPIva.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPIva.ForeColor = System.Drawing.Color.White;
+            this.lblPIva.Location = new System.Drawing.Point(135, 383);
+            this.lblPIva.Name = "lblPIva";
+            this.lblPIva.Size = new System.Drawing.Size(28, 21);
+            this.lblPIva.TabIndex = 27;
+            this.lblPIva.Text = "$0";
             // 
-            // label9
+            // lblPSub
             // 
-            this.label9.AutoSize = true;
-            this.label9.BackColor = System.Drawing.Color.Transparent;
-            this.label9.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(135, 359);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(19, 21);
-            this.label9.TabIndex = 26;
-            this.label9.Text = "$";
+            this.lblPSub.AutoSize = true;
+            this.lblPSub.BackColor = System.Drawing.Color.Transparent;
+            this.lblPSub.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPSub.ForeColor = System.Drawing.Color.White;
+            this.lblPSub.Location = new System.Drawing.Point(135, 359);
+            this.lblPSub.Name = "lblPSub";
+            this.lblPSub.Size = new System.Drawing.Size(28, 21);
+            this.lblPSub.TabIndex = 26;
+            this.lblPSub.Text = "$0";
             // 
-            // label7
+            // lblIVA
             // 
-            this.label7.AutoSize = true;
-            this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.Font = new System.Drawing.Font("Segoe UI", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(88, 383);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(41, 21);
-            this.label7.TabIndex = 25;
-            this.label7.Text = "IVA:";
+            this.lblIVA.AutoSize = true;
+            this.lblIVA.BackColor = System.Drawing.Color.Transparent;
+            this.lblIVA.Font = new System.Drawing.Font("Segoe UI", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblIVA.ForeColor = System.Drawing.Color.White;
+            this.lblIVA.Location = new System.Drawing.Point(88, 383);
+            this.lblIVA.Name = "lblIVA";
+            this.lblIVA.Size = new System.Drawing.Size(41, 21);
+            this.lblIVA.TabIndex = 25;
+            this.lblIVA.Text = "IVA:";
             // 
-            // label6
+            // lblSub
             // 
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("Segoe UI", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(52, 359);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(77, 21);
-            this.label6.TabIndex = 24;
-            this.label6.Text = "Subtotal:";
+            this.lblSub.AutoSize = true;
+            this.lblSub.BackColor = System.Drawing.Color.Transparent;
+            this.lblSub.Font = new System.Drawing.Font("Segoe UI", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSub.ForeColor = System.Drawing.Color.White;
+            this.lblSub.Location = new System.Drawing.Point(52, 359);
+            this.lblSub.Name = "lblSub";
+            this.lblSub.Size = new System.Drawing.Size(77, 21);
+            this.lblSub.TabIndex = 24;
+            this.lblSub.Text = "Subtotal:";
             // 
-            // label11
+            // lblPTotal
             // 
-            this.label11.AutoSize = true;
-            this.label11.BackColor = System.Drawing.Color.Transparent;
-            this.label11.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(135, 420);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(19, 21);
-            this.label11.TabIndex = 29;
-            this.label11.Text = "$";
+            this.lblPTotal.AutoSize = true;
+            this.lblPTotal.BackColor = System.Drawing.Color.Transparent;
+            this.lblPTotal.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPTotal.ForeColor = System.Drawing.Color.White;
+            this.lblPTotal.Location = new System.Drawing.Point(135, 420);
+            this.lblPTotal.Name = "lblPTotal";
+            this.lblPTotal.Size = new System.Drawing.Size(28, 21);
+            this.lblPTotal.TabIndex = 29;
+            this.lblPTotal.Text = "$0";
             // 
-            // label8
+            // lblTotal
             // 
-            this.label8.AutoSize = true;
-            this.label8.BackColor = System.Drawing.Color.Transparent;
-            this.label8.Font = new System.Drawing.Font("Segoe UI", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(77, 420);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(52, 21);
-            this.label8.TabIndex = 28;
-            this.label8.Text = "Total:";
+            this.lblTotal.AutoSize = true;
+            this.lblTotal.BackColor = System.Drawing.Color.Transparent;
+            this.lblTotal.Font = new System.Drawing.Font("Segoe UI", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotal.ForeColor = System.Drawing.Color.White;
+            this.lblTotal.Location = new System.Drawing.Point(77, 420);
+            this.lblTotal.Name = "lblTotal";
+            this.lblTotal.Size = new System.Drawing.Size(52, 21);
+            this.lblTotal.TabIndex = 28;
+            this.lblTotal.Text = "Total:";
             // 
             // frmAEVenta
             // 
@@ -337,12 +340,12 @@
             this.BackgroundImage = global::PROYECTO_U3.Properties.Resources.Background;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 472);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
+            this.Controls.Add(this.lblPTotal);
+            this.Controls.Add(this.lblTotal);
+            this.Controls.Add(this.lblPIva);
+            this.Controls.Add(this.lblPSub);
+            this.Controls.Add(this.lblIVA);
+            this.Controls.Add(this.lblSub);
             this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnEliminar);
@@ -364,6 +367,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmAEVenta";
             this.Text = "frmAEVenta";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmAEVenta_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrden)).EndInit();
             this.ResumeLayout(false);
@@ -390,11 +394,11 @@
         private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.Button btnAgregar;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label lblPIva;
+        private System.Windows.Forms.Label lblPSub;
+        private System.Windows.Forms.Label lblIVA;
+        private System.Windows.Forms.Label lblSub;
+        private System.Windows.Forms.Label lblPTotal;
+        private System.Windows.Forms.Label lblTotal;
     }
 }

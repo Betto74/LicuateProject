@@ -17,17 +17,19 @@ namespace PROYECTO_U3
     public partial class frmProductos : Form
     {
         List<Producto> invProductos;
-        public frmProductos()
+        frmLogin login;
+        public frmProductos(frmLogin login)
         {
             InitializeComponent();
             Initialize();
+            this.login = login;
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            frmAEProductos aep = new frmAEProductos(this);
+            frmAEProductos aep = new frmAEProductos(login);
             aep.Show();
-            this.Hide();
+            this.Close();
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
@@ -37,9 +39,9 @@ namespace PROYECTO_U3
                 // Obtener la primera fila seleccionada (en caso de que haya múltiples filas seleccionadas)
                 int index = dgvProductos.SelectedRows[0].Index;
                
-                frmAEProductos aep = new frmAEProductos(invProductos[index], this);
+                frmAEProductos aep = new frmAEProductos(invProductos[index], login);
                 aep.Show();
-                this.Hide();
+                this.Close();
                 
 
             }
@@ -79,11 +81,9 @@ namespace PROYECTO_U3
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            dgvProductos.DataSource = null;
-            dgvProductos.DataSource = invProductos;
-            //  this.Hide();
-            //  frmMenu menu = new frmMenu(false);
-            //  menu.Show();
+            frmMenu menu = new frmMenu(login);
+            menu.Show();
+            this.Close();
 
         }
 
@@ -101,7 +101,5 @@ namespace PROYECTO_U3
             dgvProductos.ClearSelection();
 
         }
-
-        
     }
 }

@@ -15,11 +15,16 @@ namespace PROYECTO_U3
 {
     public partial class frmAEVenta : Form
     {
-        bool aged;//true:agregar / false:editar
+        frmLogin login;
+        
         List<DetallesVenta> detalles = new List<DetallesVenta>();
         List<Producto> productos = new List<Producto>();
+
+        bool edit;//true:edit / false:add
         double subtotal = 0;
-        public frmAEVenta(int id)
+        int editarInd = -1, idOrden, idUsuario;
+        
+        public frmAEVenta(int id, frmLogin login)
         {
             InitializeComponent();
 
@@ -30,24 +35,135 @@ namespace PROYECTO_U3
             r.RedondearBoton(btnEditar, 30);
             r.RedondearBoton(btnEliminar, 30);
             r.RedondearBoton(btnVolver, 30);
+            
+           
+            idOrden = new VentasDAO().getId()+1;
+            if (id >= 0) {
+                DetallesVentaDAO de = new DetallesVentaDAO();
+                detalles = de.getData(id);
 
-            aged = id < 0;
-       
-            Initialize(id);
+                edit = true;
+                idOrden--;
+                subtotal = detalles.Sum(objeto => objeto.TOTAL);
+
+                reloadDgv();
+            }
+
+            productos = new ProductosDAO().getAllData();
+            cbxProducto.DataSource = productos;
+            cbxProducto.DisplayMember = "NOMBRE";
+
+            this.login = login;
+            idUsuario = login.user.ID;
         }
 
+        private void btnAceptar_Click(object sender, EventArgs e)
+        {
+            
+            if (detalles.Count() > 0)
+            {
+                DialogResult result = MessageBox.Show("¿Desea finalizar la venta?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
+                if (result == DialogResult.Yes)
+                {
+                    
+                    if (!edit)
+                    {
+                        Venta venta = new Venta()
+                        {
+                            ID = idOrden,
+                            FECHA = DateTime.Now,
+                            MONTO = subtotal * 1.16,
+                            ID_USUARIO = idUsuario,
+                            ID_CLIENTE = new VentasDAO().getCliente()
 
+                        };
+
+                        if (new DetallesVentaDAO().insert(detalles) 
+                            && new VentasDAO().insert(venta))
+                        {
+                            MessageBox.Show("Se ha producido exitosamente la venta");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Ha ocurrido un error al efectuar al venta");
+                        }
+                    }
+                    else {
+                        if (new DetallesVentaDAO().delete(idOrden) 
+                            && new DetallesVentaDAO().insert(detalles)
+                            && new VentasDAO().update(subtotal*1.16))
+                        {
+                            MessageBox.Show("Se ha editado correctamente la venta");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Ha ocurrido un error al editar al venta");
+                        }
+                    }
+                    
+                    detalles.Clear();
+                    subtotal = 0;
+                    lblPSub.Text = "$";
+                    lblPIva.Text = "$";
+                    lblPTotal.Text = "$";
+                    dgvOrden.DataSource = null;
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("No se ha agregado ningun producto");
+            }
+        }
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+
+            if (dgvOrden.SelectedRows.Count > 0)
+            {
+                editarInd = dgvOrden.SelectedRows[0].Index;
+                cbxProducto.SelectedItem = detalles[editarInd].NOMBRE_PRODUCTO;
+                txtCantidad.Text = detalles[editarInd].CANTIDAD.ToString();
+                txtCom.Text = detalles[editarInd].COMENTARIOS.ToString();
+                txtExtra.Text = "" + (detalles[editarInd].PRECIOCONEXTRA - detalles[editarInd].PRECIOUNITARIO);
+
+                btnAgregar.Text = "Aceptar";
+                btnEditar.Visible = false;
+                btnAceptar.Visible = false;
+                btnVolver.Visible = false;
+                btnEliminar.Visible = false;
+            }
+            else
+            {
+                MessageBox.Show("No se ha seleccionado ninguna fila.");
+            }
+        }
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            if (dgvOrden.SelectedRows.Count > 0)
+            {
+                subtotal -= detalles[dgvOrden.SelectedRows[0].Index].TOTAL;
+                detalles.RemoveAt(dgvOrden.SelectedRows[0].Index);
+                reloadDgv();
+            }
+            else
+            {
+
+                MessageBox.Show("No se ha seleccionado ninguna fila.");
+            }
+        }
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            frmVenta frm = new frmVenta(false);
+            
+            frmVenta frm = new frmVenta(false,login);
             frm.Show();
+            this.Close();
+       
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-
+            //Validaciones
             if (cbxProducto.SelectedIndex == -1)
             {
                 MessageBox.Show("Debe seleccionar un producto");
@@ -60,12 +176,34 @@ namespace PROYECTO_U3
                 return;
             }
 
-
-            int idOrden = new VentasDAO().getId() + 1;
-
-            if (string.IsNullOrEmpty(txtExtra.Text)) { 
+            if (string.IsNullOrEmpty(txtExtra.Text))
+            {
                 txtExtra.Text = "0";
             }
+
+            //Editar
+            if ( editarInd>=0)
+            {
+
+                detalles[editarInd].ID_PRODUCTO = ((Producto)cbxProducto.SelectedItem).ID;
+                detalles[editarInd].NOMBRE_PRODUCTO = ((Producto)cbxProducto.SelectedItem).NOMBRE;
+                detalles[editarInd].PRECIOUNITARIO = ((Producto)cbxProducto.SelectedItem).PRECIO;
+                detalles[editarInd].PRECIOCONEXTRA = ((Producto)cbxProducto.SelectedItem).PRECIO + Convert.ToInt32(txtExtra.Text);
+                detalles[editarInd].CANTIDAD = Convert.ToInt32(txtCantidad.Text);
+                detalles[editarInd].COMENTARIOS = txtCom.Text;
+                detalles[editarInd].TOTAL = detalles[editarInd].PRECIOUNITARIO * detalles[editarInd].CANTIDAD;
+
+
+                editarInd = -1;
+                btnEditar.Visible = true;
+                btnAceptar.Visible = true;
+                btnVolver.Visible = true;
+                btnEliminar.Visible = true;
+                btnAgregar.Text = "Agregar";
+                return;
+            } 
+
+            //Generar detalle
             DetallesVenta dv = new DetallesVenta()
             {
                 ID_ORDEN = idOrden,
@@ -77,100 +215,67 @@ namespace PROYECTO_U3
                 COMENTARIOS = txtCom.Text,
                 
             };
-            dv.TOTAL = 16;
+            dv.TOTAL = dv.PRECIOUNITARIO*dv.CANTIDAD;
             subtotal += dv.CANTIDAD * dv.PRECIOCONEXTRA;
 
 
 
-
-            int indice = detalles.FindIndex(x => x.Equals(dv));
+            //Verificar si existe
+             int indice = detalles.FindIndex(x => x.Equals(dv));
              if (indice == -1)
              {
-
-                 detalles.Add(dv);
-                 MessageBox.Show("Cuantos: "+detalles.Count);
+                 detalles.Add(dv);  
              }
              else
              {
                  detalles[indice].CANTIDAD += dv.CANTIDAD;
                  detalles[indice].TOTAL += dv.CANTIDAD*dv.PRECIOCONEXTRA;
-                 MessageBox.Show("Indie: " + indice);
              }
 
-          
+             reloadDgv();
+        }
 
-       
+        
+
+
+        //Recargar dgv y labels
+        private void reloadDgv() {
             dgvOrden.DataSource = null;
             dgvOrden.DataSource = detalles;
             dgvOrden.AllowUserToDeleteRows = false;
             dgvOrden.EditMode = DataGridViewEditMode.EditProgrammatically;
             dgvOrden.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvOrden.MultiSelect = false;
+            
             dgvOrden.Columns["ID_ORDEN"].Visible = false;
             dgvOrden.Columns["ID_PRODUCTO"].Visible = false;
 
-
-
-
-
-
-
-
+            lblPSub.Text = "$" + subtotal;
+            lblPIva.Text = "$" + subtotal * .16;
+            lblPTotal.Text = "$" + subtotal * 1.16;
         }
-        private void Initialize(int id)
+        //Filtro por categorias
+        private void cbxCategoria_SelectedIndexChanged_1(object sender, EventArgs e)
         {
-            if (id > 0) {
-                DetallesVentaDAO de = new DetallesVentaDAO();
-                detalles = de.getData(id);
-            }
-            
-
-            productos = new ProductosDAO().getAllData();
-            cbxProducto.DataSource = productos;
-            cbxProducto.DisplayMember = "NOMBRE";
-    
-            
-            
-
-        }
-
-        private void cbxCategoria_SelectedIndexChanged(object sender, EventArgs e)
-        {
-           // MessageBox.Show("Ha cambiado a " + cbxCategoria.SelectedItem);
-            if (cbxCategoria.SelectedItem == "Todas")
+           
+            if (cbxCategoria.SelectedItem.Equals("Todas"))
             {
                 cbxProducto.DataSource = productos;
                 cbxProducto.DisplayMember = "NOMBRE";
             }
-            else 
+            else
             {
                 List<Producto> filtro = productos.Where(p => p.CATEGORIA.Equals(cbxCategoria.SelectedItem)).ToList();
-                //MessageBox.Show(""+filtro.Count + " - " + productos.Count);
                 cbxProducto.DataSource = filtro;
                 cbxProducto.DisplayMember = "NOMBRE";
             }
-            
         }
 
-        private void btnEditar_Click(object sender, EventArgs e)
+        private void frmAEVenta_FormClosed(object sender, FormClosedEventArgs e)
         {
-           if (dgvOrden.SelectedRows.Count > 0)
-            {
-                // Obtener la primera fila seleccionada (en caso de que haya múltiples filas seleccionadas)
-                int index = dgvOrden.SelectedRows[0].Index;
-                cbxProducto.SelectedItem = detalles[index].NOMBRE_PRODUCTO;
-                txtCantidad.Text = detalles[index].CANTIDAD.ToString();
-                txtCom.Text = detalles[index].COMENTARIOS.ToString();
-                txtExtra.Text =""+(detalles[index].PRECIOCONEXTRA-detalles[index].PRECIOUNITARIO);
-
-
-
-
-            }
-            else
-            {
-                
-                MessageBox.Show("No se ha seleccionado ninguna fila.");
-            }
+           
         }
+
+
     }
 }

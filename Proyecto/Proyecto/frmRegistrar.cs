@@ -8,17 +8,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Datos;
+using Modelos;
 
 namespace PROYECTO_U3
 {
     public partial class frmRegistrar : Form
     {
-        public frmRegistrar()
+        frmLogin login;
+        public frmRegistrar(frmLogin login)
         {
             InitializeComponent();
             Redondear r = new Redondear();
             r.RedondearPicture(ptbBack, 40);
             r.RedondearBoton(btnAceptar, 30);
+
+            this.login = login; 
         }
 
         private void lblTittle_Click(object sender, EventArgs e)
@@ -40,8 +44,14 @@ namespace PROYECTO_U3
                 return;
             }
 
+            Usuario user = new Usuario() {
+                NOMBRE = txtNombre.Text,
+                USERNAME = txtUser.Text,
+                PASSWORD = txtPassword.Text
+            };
+
             LoginDAO consultas = new LoginDAO();
-            if (consultas.register(txtNombre.Text, txtUser.Text, txtPassword.Text))
+            if (consultas.register(user))
             {
                 MessageBox.Show(this, "Se ha registrado correctamente");
                 this.Close ();
@@ -60,6 +70,18 @@ namespace PROYECTO_U3
         private void txtUser_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            frmMenu menu = new frmMenu(login);
+            menu.Show();
+            this.Close();
+        }
+
+        private void frmRegistrar_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            
         }
     }
 }

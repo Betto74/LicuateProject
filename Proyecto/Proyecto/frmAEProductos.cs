@@ -16,32 +16,33 @@ namespace PROYECTO_U3
 {
     public partial class frmAEProductos : Form
     {
-        frmProductos frmP;
+        frmLogin login;
         Producto producto;
         Boolean bandera;      
-        public frmAEProductos(Producto producto, frmProductos p)
+        public frmAEProductos(Producto producto, frmLogin login)
         {
             InitializeComponent();
             fillData(producto);
-            this.frmP = p;
+            this.login = login;
             this.producto = producto;   
             bandera = false;
             
         }
 
-        public frmAEProductos(frmProductos p)
+        public frmAEProductos(frmLogin login)
         {
             InitializeComponent();
-            this.frmP = p;
+            this.login = login;
             bandera = true;
         }
 
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-    
-            frmP.Show();
-            frmP.Initialize();
+
+            frmProductos frmp = new frmProductos(login);
+            frmp.Show();
+
             this.Close();
         }
 
@@ -50,12 +51,7 @@ namespace PROYECTO_U3
 
         }
 
-        private void frmAEProductos_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            
-            frmP.Show();
-            frmP.Initialize();
-        }
+        
 
         private void fillData(Producto p)
         {
@@ -134,9 +130,15 @@ namespace PROYECTO_U3
 
             }
 
-            frmP.Show();
-            frmP.Initialize();
-            this.Hide();
+            txtNombre.Text = "";
+            txtDescripcion.Text = "";
+            txtPrecio.Text = "";
+        }
+
+        private void frmAEProductos_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+
         }
     }
 }

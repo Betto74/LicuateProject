@@ -212,7 +212,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmMenu";
             this.Text = "frmMenu";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMenu_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptIcon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptDeco2)).EndInit();

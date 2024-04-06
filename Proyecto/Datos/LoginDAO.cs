@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using Modelos;
@@ -12,7 +13,7 @@ namespace Datos
 {
     public class LoginDAO
     {
-        public Boolean register(String NOMBRE, String USERNAME, String PASSWORD)
+        public Boolean register(Usuario user)
         {
 
             if (Conexion.Conectar())
@@ -26,9 +27,9 @@ namespace Datos
                     //Crear el dataadapter
                     MySqlCommand sentencia = new MySqlCommand(select);
                     //Asignar los parámetros
-                    sentencia.Parameters.AddWithValue("@NOMBRE", NOMBRE);
-                    sentencia.Parameters.AddWithValue("@USERNAME", USERNAME);
-                    sentencia.Parameters.AddWithValue("@PASSWORD", PASSWORD);
+                    sentencia.Parameters.AddWithValue("@NOMBRE", user.NOMBRE);
+                    sentencia.Parameters.AddWithValue("@USERNAME", user.USERNAME);
+                    sentencia.Parameters.AddWithValue("@PASSWORD", user.PASSWORD);
 
 
                     sentencia.Connection = Conexion.conexion;
@@ -48,9 +49,9 @@ namespace Datos
 
         }
 
-        public int Login(String USERNAME, String PASSWORD)
+        public Usuario getUser(String USERNAME, String PASSWORD)
         {
-
+            Usuario user = new Usuario();
             if (Conexion.Conectar())
             {
                 try
@@ -67,8 +68,28 @@ namespace Datos
 
                     sentencia.Connection = Conexion.conexion;
 
-                    int rows = Convert.ToInt32(sentencia.ExecuteScalar());
-                    return rows;
+                    MySqlDataAdapter da = new MySqlDataAdapter(sentencia);
+
+                    DataTable dt = new DataTable();
+                    //Llenar el datatable
+                    da.Fill(dt);
+
+                    //Revisar si hubo resultados
+                    if (dt.Rows.Count > 0)
+                    {
+                        DataRow fila = dt.Rows[0];
+                        user = new Usuario()
+                        {
+                            ID = Convert.ToInt32(fila["ID"]),
+                            NOMBRE = fila["NOMBRE"].ToString(),
+                            USERNAME = fila["USERNAME"].ToString(),
+                            PASSWORD = fila["PASSWORD"].ToString(),
+                            CARGO = fila["CARGO"].ToString(),
+                        };
+
+                    }
+
+                    return user;
                 }
                 finally
                 {
@@ -77,13 +98,12 @@ namespace Datos
             }
             else
             {
-                return -1;
+                return null;
             }
 
         }
 
-
-        public bool admin(String USERNAME, String PASSWORD)
+        /*public bool user(String USERNAME, String PASSWORD)
         {
 
             if (Conexion.Conectar())
@@ -91,8 +111,8 @@ namespace Datos
                 try
                 {
 
-                    String select = @"SELECT * FROM USUARIOS
-                                    where USERNAME = @USERNAME and PASSWORD = SHA2(@PASSWORD,256) and CARGO = 'Admin'";
+                    String select = @"SELECT * FROM USUARIOS"+
+                                    " WHERE USERNAME = @USERNAME and PASSWORD = SHA2(@PASSWORD,256)";
 
                     //Crear el dataadapter
                     MySqlCommand sentencia = new MySqlCommand(select);
@@ -125,6 +145,6 @@ namespace Datos
                 return false;
             }
 
-        }
+        }*/
     }
 }

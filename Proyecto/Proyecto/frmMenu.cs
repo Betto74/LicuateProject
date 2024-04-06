@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Modelos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,7 +14,8 @@ namespace PROYECTO_U3
     public partial class frmMenu : Form
     {
         frmLogin login;
-        public frmMenu(bool admin, frmLogin log)
+        
+        public frmMenu(frmLogin log)
         {
             InitializeComponent();
 
@@ -23,49 +25,53 @@ namespace PROYECTO_U3
             r.RedondearBoton(btnProductos, 30);
             r.RedondearBoton(btnCorte, 30);
 
-            if(!admin)
+            
+            if(log.user.CARGO=="Admin")
+            {
+                btnRegistrar.Visible = true;
+            }
+            else
             {
                 btnRegistrar.Visible = false;
             }
+
+      
             this.login = log;
         }
 
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
-            frmRegistrar frmRegistrar = new frmRegistrar();
+            frmRegistrar frmRegistrar = new frmRegistrar(login);
             frmRegistrar.Show();
+            this.Close();
         }
 
         private void btnVentas_Click(object sender, EventArgs e)
         {
-            frmVenta venta = new frmVenta(false);
+            frmVenta venta = new frmVenta(false, login);
             venta.Show();
-            this.Hide();
+            this.Close();
         }
 
         private void btnProductos_Click(object sender, EventArgs e)
         {
-            frmProductos productos = new frmProductos();
+            frmProductos productos = new frmProductos(login);
             productos.Show();
-            this.Hide();
+            this.Close();
         }
 
         private void btnCorte_Click(object sender, EventArgs e)
         {
-            frmVenta venta = new frmVenta(true);
+            frmVenta venta = new frmVenta(true, login);
             venta.Show();
-            this.Hide();
+            this.Close();
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
+            login.Show();
             this.Close();
             
-        }
-
-        private void frmMenu_FormClosed(object sender, FormClosedEventArgs e)
-        {     
-            login.Show();
         }
 
         

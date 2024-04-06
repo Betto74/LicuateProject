@@ -37,7 +37,12 @@
             this.btnEditar = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
             this.btnVolver = new System.Windows.Forms.Button();
-            this.btnVer = new System.Windows.Forms.Button();
+            this.btnFiltrar = new System.Windows.Forms.Button();
+            this.btnTodo = new System.Windows.Forms.Button();
+            this.lblCantidad = new System.Windows.Forms.Label();
+            this.lblCant = new System.Windows.Forms.Label();
+            this.lblTotal = new System.Windows.Forms.Label();
+            this.lblPTotal = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVentas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -148,19 +153,81 @@
             this.btnVolver.UseVisualStyleBackColor = false;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
-            // btnVer
+            // btnFiltrar
             // 
-            this.btnVer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(55)))), ((int)(((byte)(65)))));
-            this.btnVer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnVer.Font = new System.Drawing.Font("Segoe UI", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnVer.ForeColor = System.Drawing.Color.White;
-            this.btnVer.Location = new System.Drawing.Point(496, 69);
-            this.btnVer.Name = "btnVer";
-            this.btnVer.Size = new System.Drawing.Size(94, 33);
-            this.btnVer.TabIndex = 9;
-            this.btnVer.Text = "Ver";
-            this.btnVer.UseVisualStyleBackColor = false;
-            this.btnVer.Click += new System.EventHandler(this.btnVer_Click);
+            this.btnFiltrar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(55)))), ((int)(((byte)(65)))));
+            this.btnFiltrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFiltrar.Font = new System.Drawing.Font("Segoe UI", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFiltrar.ForeColor = System.Drawing.Color.White;
+            this.btnFiltrar.Location = new System.Drawing.Point(489, 63);
+            this.btnFiltrar.Name = "btnFiltrar";
+            this.btnFiltrar.Size = new System.Drawing.Size(94, 33);
+            this.btnFiltrar.TabIndex = 9;
+            this.btnFiltrar.Text = "Filtrar";
+            this.btnFiltrar.UseVisualStyleBackColor = false;
+            this.btnFiltrar.Click += new System.EventHandler(this.btnVer_Click);
+            // 
+            // btnTodo
+            // 
+            this.btnTodo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(55)))), ((int)(((byte)(65)))));
+            this.btnTodo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTodo.Font = new System.Drawing.Font("Segoe UI", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTodo.ForeColor = System.Drawing.Color.White;
+            this.btnTodo.Location = new System.Drawing.Point(602, 63);
+            this.btnTodo.Name = "btnTodo";
+            this.btnTodo.Size = new System.Drawing.Size(94, 33);
+            this.btnTodo.TabIndex = 10;
+            this.btnTodo.Text = "Ver todas";
+            this.btnTodo.UseVisualStyleBackColor = false;
+            this.btnTodo.Click += new System.EventHandler(this.btnTodo_Click);
+            // 
+            // lblCantidad
+            // 
+            this.lblCantidad.AutoSize = true;
+            this.lblCantidad.BackColor = System.Drawing.Color.Transparent;
+            this.lblCantidad.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCantidad.ForeColor = System.Drawing.Color.White;
+            this.lblCantidad.Location = new System.Drawing.Point(45, 367);
+            this.lblCantidad.Name = "lblCantidad";
+            this.lblCantidad.Size = new System.Drawing.Size(136, 21);
+            this.lblCantidad.TabIndex = 11;
+            this.lblCantidad.Text = "Ventas Realizadas:";
+            // 
+            // lblCant
+            // 
+            this.lblCant.AutoSize = true;
+            this.lblCant.BackColor = System.Drawing.Color.Transparent;
+            this.lblCant.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCant.ForeColor = System.Drawing.Color.White;
+            this.lblCant.Location = new System.Drawing.Point(186, 367);
+            this.lblCant.Name = "lblCant";
+            this.lblCant.Size = new System.Drawing.Size(19, 21);
+            this.lblCant.TabIndex = 12;
+            this.lblCant.Text = "0";
+            // 
+            // lblTotal
+            // 
+            this.lblTotal.AutoSize = true;
+            this.lblTotal.BackColor = System.Drawing.Color.Transparent;
+            this.lblTotal.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotal.ForeColor = System.Drawing.Color.White;
+            this.lblTotal.Location = new System.Drawing.Point(63, 406);
+            this.lblTotal.Name = "lblTotal";
+            this.lblTotal.Size = new System.Drawing.Size(117, 21);
+            this.lblTotal.TabIndex = 13;
+            this.lblTotal.Text = "Total Generado:";
+            // 
+            // lblPTotal
+            // 
+            this.lblPTotal.AutoSize = true;
+            this.lblPTotal.BackColor = System.Drawing.Color.Transparent;
+            this.lblPTotal.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPTotal.ForeColor = System.Drawing.Color.White;
+            this.lblPTotal.Location = new System.Drawing.Point(177, 406);
+            this.lblPTotal.Name = "lblPTotal";
+            this.lblPTotal.Size = new System.Drawing.Size(28, 21);
+            this.lblPTotal.TabIndex = 14;
+            this.lblPTotal.Text = "$0";
             // 
             // frmVenta
             // 
@@ -169,7 +236,12 @@
             this.BackgroundImage = global::PROYECTO_U3.Properties.Resources.Background;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btnVer);
+            this.Controls.Add(this.lblPTotal);
+            this.Controls.Add(this.lblTotal);
+            this.Controls.Add(this.lblCant);
+            this.Controls.Add(this.lblCantidad);
+            this.Controls.Add(this.btnTodo);
+            this.Controls.Add(this.btnFiltrar);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.btnEditar);
@@ -183,7 +255,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmVenta";
             this.Text = "frmVenta";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmVenta_FormClosed);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmVenta_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dgvVentas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -201,6 +273,11 @@
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.Button btnVolver;
-        private System.Windows.Forms.Button btnVer;
+        private System.Windows.Forms.Button btnFiltrar;
+        private System.Windows.Forms.Button btnTodo;
+        private System.Windows.Forms.Label lblCantidad;
+        private System.Windows.Forms.Label lblCant;
+        private System.Windows.Forms.Label lblTotal;
+        private System.Windows.Forms.Label lblPTotal;
     }
 }
