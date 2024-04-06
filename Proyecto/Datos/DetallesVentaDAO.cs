@@ -19,7 +19,9 @@ namespace Datos
                 try
                 {
 
-                    String select = @"SELECT * FROM DETALLES_ORDEN WHERE ID_ORDEN = @ID";
+                    String select = @"SELECT D.ID_ORDEN, D.ID_PRODUCTO, D.PRECIOUNITARIO, D.PRECIOCONEXTRA,"+
+                                      "D.CANTIDAD, D.COMENTARIOS, P.NOMBRE FROM DETALLES_ORDEN D " +
+                                      "JOIN PRODUCTS P ON D.ID_PRODUCTO=P.ID WHERE ID_ORDEN = @ID";
 
                     //Definir un datatable para que sea llenado
                     DataTable dt = new DataTable();

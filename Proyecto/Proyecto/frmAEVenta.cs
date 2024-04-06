@@ -79,8 +79,8 @@ namespace PROYECTO_U3
 
                         };
 
-                        if (new DetallesVentaDAO().insert(detalles) 
-                            && new VentasDAO().insert(venta))
+                        if (new VentasDAO().insert(venta)
+                            && new DetallesVentaDAO().insert(detalles))
                         {
                             MessageBox.Show("Se ha producido exitosamente la venta");
                         }
@@ -90,9 +90,9 @@ namespace PROYECTO_U3
                         }
                     }
                     else {
-                        if (new DetallesVentaDAO().delete(idOrden) 
-                            && new DetallesVentaDAO().insert(detalles)
-                            && new VentasDAO().update(subtotal*1.16))
+                        if (new VentasDAO().update(subtotal * 1.16)
+                            && new DetallesVentaDAO().delete(idOrden) 
+                            && new DetallesVentaDAO().insert(detalles))
                         {
                             MessageBox.Show("Se ha editado correctamente la venta");
                         }
@@ -127,11 +127,17 @@ namespace PROYECTO_U3
                 txtCom.Text = detalles[editarInd].COMENTARIOS.ToString();
                 txtExtra.Text = "" + (detalles[editarInd].PRECIOCONEXTRA - detalles[editarInd].PRECIOUNITARIO);
 
+   
+
                 btnAgregar.Text = "Aceptar";
                 btnEditar.Visible = false;
                 btnAceptar.Visible = false;
                 btnVolver.Visible = false;
                 btnEliminar.Visible = false;
+
+
+
+
             }
             else
             {
@@ -191,8 +197,15 @@ namespace PROYECTO_U3
                 detalles[editarInd].PRECIOCONEXTRA = ((Producto)cbxProducto.SelectedItem).PRECIO + Convert.ToInt32(txtExtra.Text);
                 detalles[editarInd].CANTIDAD = Convert.ToInt32(txtCantidad.Text);
                 detalles[editarInd].COMENTARIOS = txtCom.Text;
-                detalles[editarInd].TOTAL = detalles[editarInd].PRECIOUNITARIO * detalles[editarInd].CANTIDAD;
+                
 
+
+                
+
+                
+                subtotal -= detalles[editarInd].TOTAL;
+                detalles[editarInd].TOTAL = detalles[editarInd].PRECIOUNITARIO * detalles[editarInd].CANTIDAD;
+                subtotal += detalles[editarInd].TOTAL;
 
                 editarInd = -1;
                 btnEditar.Visible = true;
@@ -200,6 +213,8 @@ namespace PROYECTO_U3
                 btnVolver.Visible = true;
                 btnEliminar.Visible = true;
                 btnAgregar.Text = "Agregar";
+
+                reloadDgv();
                 return;
             } 
 
@@ -231,7 +246,7 @@ namespace PROYECTO_U3
                  detalles[indice].CANTIDAD += dv.CANTIDAD;
                  detalles[indice].TOTAL += dv.CANTIDAD*dv.PRECIOCONEXTRA;
              }
-
+            
              reloadDgv();
         }
 
@@ -253,6 +268,12 @@ namespace PROYECTO_U3
             lblPSub.Text = "$" + subtotal;
             lblPIva.Text = "$" + subtotal * .16;
             lblPTotal.Text = "$" + subtotal * 1.16;
+
+            txtCantidad.Text = "0";
+            txtCom.Text = "";
+            txtExtra.Text = "";
+            cbxProducto.SelectedIndex = 0;
+            cbxCategoria.SelectedIndex = 0;
         }
         //Filtro por categorias
         private void cbxCategoria_SelectedIndexChanged_1(object sender, EventArgs e)
