@@ -92,7 +92,7 @@ namespace Datos
                 {
 
                     String select = @"SELECT * FROM USUARIOS
-                                    where USERNAME = @USERNAME and PASSWORD = SHA2(@PASSWORD,256) and CARGO = 'Admin';";
+                                    where USERNAME = @USERNAME and PASSWORD = SHA2(@PASSWORD,256) and CARGO = 'Admin'";
 
                     //Crear el dataadapter
                     MySqlCommand sentencia = new MySqlCommand(select);

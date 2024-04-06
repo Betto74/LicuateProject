@@ -66,10 +66,11 @@
             // 
             // dgvOrden
             // 
+            this.dgvOrden.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvOrden.BackgroundColor = System.Drawing.Color.White;
             this.dgvOrden.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvOrden.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvOrden.Location = new System.Drawing.Point(45, 160);
+            this.dgvOrden.Location = new System.Drawing.Point(45, 158);
             this.dgvOrden.Name = "dgvOrden";
             this.dgvOrden.Size = new System.Drawing.Size(713, 187);
             this.dgvOrden.TabIndex = 1;
@@ -136,8 +137,18 @@
             // 
             // cbxCategoria
             // 
+            this.cbxCategoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxCategoria.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxCategoria.FormattingEnabled = true;
+            this.cbxCategoria.Items.AddRange(new object[] {
+            "Todas",
+            "Jugo",
+            "Licuado",
+            "Galletas",
+            "Pan",
+            "Fruta",
+            "Postre",
+            "Bebida Caliente"});
             this.cbxCategoria.Location = new System.Drawing.Point(35, 34);
             this.cbxCategoria.Name = "cbxCategoria";
             this.cbxCategoria.Size = new System.Drawing.Size(161, 25);
@@ -145,6 +156,7 @@
             // 
             // cbxProducto
             // 
+            this.cbxProducto.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxProducto.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxProducto.FormattingEnabled = true;
             this.cbxProducto.Location = new System.Drawing.Point(35, 95);
@@ -176,6 +188,7 @@
             this.txtExtra.Name = "txtExtra";
             this.txtExtra.Size = new System.Drawing.Size(100, 25);
             this.txtExtra.TabIndex = 11;
+            this.txtExtra.Text = "0";
             // 
             // btnAceptar
             // 
@@ -202,6 +215,7 @@
             this.btnEditar.TabIndex = 13;
             this.btnEditar.Text = "Editar";
             this.btnEditar.UseVisualStyleBackColor = false;
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
             // btnEliminar
             // 
@@ -242,6 +256,7 @@
             this.btnAgregar.TabIndex = 16;
             this.btnAgregar.Text = "Aceptar";
             this.btnAgregar.UseVisualStyleBackColor = false;
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // label10
             // 

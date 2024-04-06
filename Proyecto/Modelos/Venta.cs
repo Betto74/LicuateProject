@@ -13,6 +13,7 @@ namespace Modelos
         public double MONTO { get; set; }
         public int ID_USUARIO { get; set; }
         public int ID_CLIENTE { get; set; }
+        public String NOMBRE_USUARIO { get; set; }
 
     }
 }

@@ -18,7 +18,7 @@ namespace Datos
                 try
                 {
 
-                    String select = @"SELECT FROM ORDEN WHERE ID = @ID";
+                    String select = @"SELECT * FROM ORDEN WHERE ID = @ID";
 
                     //Definir un datatable para que sea llenado
                     DataTable dt = new DataTable();
@@ -72,7 +72,8 @@ namespace Datos
                 try
                 {
 
-                    String select = @"SELECT * FROM ORDEN";
+                    String select = @"SELECT O.ID, O.FECHA, O.MONTO, O.ID_CLIENTE, U.NOMBRE"
+                                    + " FROM ORDEN O JOIN USUARIOS U ON O.ID_USUARIO = U.ID ORDER BY O.FECHA;";
 
                     //Definir un datatable para que sea llenado
                     DataTable dt = new DataTable();
@@ -97,8 +98,8 @@ namespace Datos
                                 ID = Convert.ToInt32(fila["ID"]),
                                 FECHA = Convert.ToDateTime(fila["FECHA"]),
                                 MONTO = Convert.ToDouble(fila["MONTO"]),
-                                ID_USUARIO = Convert.ToInt32(fila["ID_USUARIO"]),
-                                ID_CLIENTE = Convert.ToInt32(fila["ID_CLIENTE"])
+                                ID_CLIENTE = Convert.ToInt32(fila["ID_CLIENTE"]),
+                                NOMBRE_USUARIO = fila["NOMBRE"].ToString()
                             };
                             lista.Add(venta);
                         }
@@ -235,8 +236,47 @@ namespace Datos
             }
 
         }
+
+        public int getId()
+        {
+            int ultimoID = 0;
+
+            if (Conexion.Conectar())
+            {
+                try
+                {
+                    // Crear la sentencia SQL para obtener el último ID
+                    string select = @"SELECT ID FROM ORDEN ORDER BY ID DESC LIMIT 1;";
+
+                    // Crear el comando y asignar la sentencia SQL y la conexión
+                    MySqlCommand comando = new MySqlCommand(select, Conexion.conexion);
+
+                    // Ejecutar la consulta y obtener el resultado
+                    object resultado = comando.ExecuteScalar();
+
+                    // Verificar si el resultado no es nulo y convertirlo a entero
+                    if (resultado != null && resultado != DBNull.Value)
+                    {
+                        ultimoID = Convert.ToInt32(resultado);
+                    }
+                    else {
+                        ultimoID = -1;
+                    }
+                    
+                }
+                finally
+                {
+                    // Desconectar la base de datos
+                    Conexion.Desconectar();
+                }
+            }
+            return ultimoID;
+
+            
+        }
+
     }
 
-    
+
 
 }

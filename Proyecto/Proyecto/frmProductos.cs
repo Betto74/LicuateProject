@@ -79,10 +79,12 @@ namespace PROYECTO_U3
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            frmMenu menu = new frmMenu(false);
-            menu.Show();
-            
+            dgvProductos.DataSource = null;
+            dgvProductos.DataSource = invProductos;
+            //  this.Hide();
+            //  frmMenu menu = new frmMenu(false);
+            //  menu.Show();
+
         }
 
 

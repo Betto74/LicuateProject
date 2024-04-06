@@ -14,17 +14,14 @@ namespace PROYECTO_U3
 {
     public partial class frmLogin : Form
     {
+        private bool cargo;
         public frmLogin()
         {
             InitializeComponent();
-            this.KeyPreview = true;
+          
             Redondear r = new Redondear();
             r.RedondearPicture(ptbBack, 40);
             r.RedondearBoton(btnAceptar, 30);
-      
-       
-
-            
 
         }
         
@@ -40,7 +37,7 @@ namespace PROYECTO_U3
         private void aceptar()
         {
 
-            if (txtUser.Text.Equals("") || txtPassword.Text.Equals(""))
+            if (string.IsNullOrEmpty(txtUser.Text) || string.IsNullOrEmpty(txtPassword.Text))
             {
                 MessageBox.Show(this, "No pueden existir campos vacios");
                 return;
@@ -49,21 +46,21 @@ namespace PROYECTO_U3
             LoginDAO consultas = new LoginDAO();
             if (consultas.Login(txtUser.Text, txtPassword.Text) > 0)
             {
-               if(consultas.admin(txtUser.Text, txtPassword.Text) == true)
+                cargo = consultas.admin(txtUser.Text, txtPassword.Text);
+                if ( cargo == true)
                 {
                     this.Hide();
-                    frmMenu frmMenu = new frmMenu(true);
-                    txtPassword.Text = "";
+                    frmMenu frmMenu = new frmMenu(true,this);
                     frmMenu.Show();
                 }
                 else
                 {
                     this.Hide();
-                    frmMenu frmMenu = new frmMenu(false);
-                    txtPassword.Text = "";
+                    frmMenu frmMenu = new frmMenu(false,this);
                     frmMenu.Show();
                 }
-                
+                txtPassword.Text = "";
+                txtUser.Text = "";
             }
             else
             {
