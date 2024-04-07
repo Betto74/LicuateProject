@@ -73,7 +73,7 @@ namespace Datos
                 {
 
                     String select = @"SELECT O.ID, O.FECHA, O.MONTO, O.ID_CLIENTE, U.NOMBRE"
-                                    + " FROM ORDEN O JOIN USUARIOS U ON O.ID_USUARIO = U.ID ORDER BY O.FECHA;";
+                                    + " FROM ORDEN O JOIN USUARIOS U ON O.ID_USUARIO = U.ID ORDER BY O.FECHA ASC;";
 
                     //Definir un datatable para que sea llenado
                     DataTable dt = new DataTable();
@@ -223,7 +223,7 @@ namespace Datos
 
         }
 
-        public Boolean update(double MONTO)
+        public Boolean update(double MONTO, int ID)
         {
 
             if (Conexion.Conectar())
@@ -232,7 +232,7 @@ namespace Datos
                 {
 
                     String select = @"UPDATE ORDEN " +                                                                           
-                                        "MONTO = @MONTO," +
+                                        "SET MONTO = @MONTO " +
                                       "WHERE ID = @ID";
 
 
@@ -241,6 +241,7 @@ namespace Datos
                     //Asignar los parámetros
              
                     sentencia.Parameters.AddWithValue("@MONTO", MONTO);
+                    sentencia.Parameters.AddWithValue("@ID", ID);
                   
 
 

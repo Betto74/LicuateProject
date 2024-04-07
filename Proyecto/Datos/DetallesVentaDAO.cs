@@ -88,17 +88,22 @@ namespace Datos
                     //Crear el dataadapter
                     MySqlCommand sentencia = new MySqlCommand(select);
                     //Asignar los parámetros
+                    sentencia.Parameters.Add("@ID_ORDEN", MySqlDbType.Int32);
+                    sentencia.Parameters.Add("@ID_PRODUCTO", MySqlDbType.Int32);
+                    sentencia.Parameters.Add("@PRECIOUNITARIO", MySqlDbType.Decimal);
+                    sentencia.Parameters.Add("@PRECIOCONEXTRA", MySqlDbType.Decimal);
+                    sentencia.Parameters.Add("@CANTIDAD", MySqlDbType.Int32);
+                    sentencia.Parameters.Add("@COMENTARIOS", MySqlDbType.VarChar);
+
                     sentencia.Connection = Conexion.conexion;
                     for ( int i =0; i < detalles.Count(); i++)
                     {
-                        sentencia.Parameters.AddWithValue("@ID_ORDEN", detalles[i].ID_ORDEN);
-                        sentencia.Parameters.AddWithValue("@ID_PRODUCTO", detalles[i].ID_PRODUCTO);
-                        sentencia.Parameters.AddWithValue("@PRECIOUNITARIO", detalles[i].PRECIOUNITARIO);
-                        sentencia.Parameters.AddWithValue("@PRECIOCONEXTRA", detalles[i].PRECIOCONEXTRA);
-                        sentencia.Parameters.AddWithValue("@CANTIDAD", detalles[i].CANTIDAD);
-                        sentencia.Parameters.AddWithValue("@COMENTARIOS", detalles[i].COMENTARIOS);
-
-                        
+                        sentencia.Parameters["@ID_ORDEN"].Value = detalles[i].ID_ORDEN;
+                        sentencia.Parameters["@ID_PRODUCTO"].Value = detalles[i].ID_PRODUCTO;
+                        sentencia.Parameters["@PRECIOUNITARIO"].Value = detalles[i].PRECIOUNITARIO;
+                        sentencia.Parameters["@PRECIOCONEXTRA"].Value = detalles[i].PRECIOCONEXTRA;
+                        sentencia.Parameters["@CANTIDAD"].Value = detalles[i].CANTIDAD;
+                        sentencia.Parameters["@COMENTARIOS"].Value = detalles[i].COMENTARIOS;
 
                         sentencia.ExecuteNonQuery();
                     }

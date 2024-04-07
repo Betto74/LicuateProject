@@ -37,7 +37,7 @@ namespace PROYECTO_U3
             r.RedondearBoton(btnVolver, 30);
             
            
-            idOrden = new VentasDAO().getId()+1;
+            idOrden = new VentasDAO().getId();
             if (id >= 0) {
                 DetallesVentaDAO de = new DetallesVentaDAO();
                 detalles = de.getData(id);
@@ -90,7 +90,7 @@ namespace PROYECTO_U3
                         }
                     }
                     else {
-                        if (new VentasDAO().update(subtotal * 1.16)
+                        if (new VentasDAO().update(subtotal * 1.16, detalles[0].ID_ORDEN)
                             && new DetallesVentaDAO().delete(idOrden) 
                             && new DetallesVentaDAO().insert(detalles))
                         {
@@ -122,7 +122,7 @@ namespace PROYECTO_U3
             if (dgvOrden.SelectedRows.Count > 0)
             {
                 editarInd = dgvOrden.SelectedRows[0].Index;
-                cbxProducto.SelectedItem = detalles[editarInd].NOMBRE_PRODUCTO;
+                cbxProducto.SelectedIndex = cbxProducto.FindStringExact(detalles[editarInd].NOMBRE_PRODUCTO);
                 txtCantidad.Text = detalles[editarInd].CANTIDAD.ToString();
                 txtCom.Text = detalles[editarInd].COMENTARIOS.ToString();
                 txtExtra.Text = "" + (detalles[editarInd].PRECIOCONEXTRA - detalles[editarInd].PRECIOUNITARIO);
@@ -134,10 +134,6 @@ namespace PROYECTO_U3
                 btnAceptar.Visible = false;
                 btnVolver.Visible = false;
                 btnEliminar.Visible = false;
-
-
-
-
             }
             else
             {
@@ -148,6 +144,7 @@ namespace PROYECTO_U3
         {
             if (dgvOrden.SelectedRows.Count > 0)
             {
+
                 subtotal -= detalles[dgvOrden.SelectedRows[0].Index].TOTAL;
                 detalles.RemoveAt(dgvOrden.SelectedRows[0].Index);
                 reloadDgv();
@@ -187,36 +184,7 @@ namespace PROYECTO_U3
                 txtExtra.Text = "0";
             }
 
-            //Editar
-            if ( editarInd>=0)
-            {
-
-                detalles[editarInd].ID_PRODUCTO = ((Producto)cbxProducto.SelectedItem).ID;
-                detalles[editarInd].NOMBRE_PRODUCTO = ((Producto)cbxProducto.SelectedItem).NOMBRE;
-                detalles[editarInd].PRECIOUNITARIO = ((Producto)cbxProducto.SelectedItem).PRECIO;
-                detalles[editarInd].PRECIOCONEXTRA = ((Producto)cbxProducto.SelectedItem).PRECIO + Convert.ToInt32(txtExtra.Text);
-                detalles[editarInd].CANTIDAD = Convert.ToInt32(txtCantidad.Text);
-                detalles[editarInd].COMENTARIOS = txtCom.Text;
-                
-
-
-                
-
-                
-                subtotal -= detalles[editarInd].TOTAL;
-                detalles[editarInd].TOTAL = detalles[editarInd].PRECIOUNITARIO * detalles[editarInd].CANTIDAD;
-                subtotal += detalles[editarInd].TOTAL;
-
-                editarInd = -1;
-                btnEditar.Visible = true;
-                btnAceptar.Visible = true;
-                btnVolver.Visible = true;
-                btnEliminar.Visible = true;
-                btnAgregar.Text = "Agregar";
-
-                reloadDgv();
-                return;
-            } 
+            
 
             //Generar detalle
             DetallesVenta dv = new DetallesVenta()
@@ -230,13 +198,29 @@ namespace PROYECTO_U3
                 COMENTARIOS = txtCom.Text,
                 
             };
+            
             dv.TOTAL = dv.PRECIOUNITARIO*dv.CANTIDAD;
             subtotal += dv.CANTIDAD * dv.PRECIOCONEXTRA;
+            
 
+            //Editar
+            if (editarInd >= 0)
+            {
+                dv.ID_ORDEN = detalles[editarInd].ID_ORDEN;
+                subtotal -= detalles[editarInd].TOTAL;
+                detalles.RemoveAt(editarInd);
 
+                btnEditar.Visible = true;
+                btnAceptar.Visible = true;
+                btnVolver.Visible = true;
+                btnEliminar.Visible = true;
+                btnAgregar.Text = "Agregar";
+                editarInd = -1;
+
+            }
 
             //Verificar si existe
-             int indice = detalles.FindIndex(x => x.Equals(dv));
+            int indice = detalles.FindIndex(x => x.Equals(dv));
              if (indice == -1)
              {
                  detalles.Add(dv);  
@@ -272,8 +256,8 @@ namespace PROYECTO_U3
             txtCantidad.Text = "0";
             txtCom.Text = "";
             txtExtra.Text = "";
-            cbxProducto.SelectedIndex = 0;
-            cbxCategoria.SelectedIndex = 0;
+            cbxProducto.SelectedIndex = -1;
+            cbxCategoria.SelectedIndex = -1;
         }
         //Filtro por categorias
         private void cbxCategoria_SelectedIndexChanged_1(object sender, EventArgs e)

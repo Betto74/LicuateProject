@@ -51,7 +51,7 @@ namespace Datos
 
         public Usuario getUser(String USERNAME, String PASSWORD)
         {
-            Usuario user = new Usuario();
+            Usuario user = null;
             if (Conexion.Conectar())
             {
                 try

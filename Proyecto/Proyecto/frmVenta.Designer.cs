@@ -93,10 +93,10 @@
             this.dgvVentas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvVentas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvVentas.Location = new System.Drawing.Point(45, 118);
+            this.dgvVentas.MultiSelect = false;
             this.dgvVentas.Name = "dgvVentas";
             this.dgvVentas.Size = new System.Drawing.Size(719, 234);
             this.dgvVentas.TabIndex = 4;
-            this.dgvVentas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVentas_CellContentClick);
             // 
             // btnAgregar
             // 
@@ -138,6 +138,7 @@
             this.btnEliminar.TabIndex = 7;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = false;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // btnVolver
             // 

@@ -25,8 +25,8 @@ namespace PROYECTO_U3
             
             if (!corte)
             {
-                ventas = new VentasDAO().getAllData();
-                Initialize(ventas);
+                
+                Initialize(true);
                 lblCant.Visible = false;
                 lblCantidad.Visible= false;
                 lblPTotal.Visible= false;
@@ -44,8 +44,16 @@ namespace PROYECTO_U3
             this.login = login;
         }
 
+        private void btnVer_Click(object sender, EventArgs e)
+        {
+            Initialize(false);
+        }
 
-        
+        private void btnTodo_Click(object sender, EventArgs e)
+        {
+            Initialize(true);
+        }
+
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
@@ -55,48 +63,17 @@ namespace PROYECTO_U3
             this.Close();
         }
 
-        private void dgvVentas_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void btnVolver_Click(object sender, EventArgs e)
-        {
-            
-            frmMenu menu = new frmMenu(login);
-            menu.Show();
-            this.Close();
-        }
-
-        private void btnVer_Click(object sender, EventArgs e)
-        {
-            DateTime fechaI = dtpInicio.Value, fechaF = dtpFin.Value;
-            string fechaInicio = fechaI.ToString("yyyy-MM-dd");
-            string fechaFin = fechaF.ToString("yyyy-MM-dd");
-
-
-            List<Venta> filtroVentas = new VentasDAO().getRange(fechaInicio,fechaFin);
-            Initialize(filtroVentas);
-
-            if (corte) { 
-                lblCant.Text = filtroVentas.Count.ToString();
-                lblPTotal.Text = "$"+  filtroVentas.Sum(objeto => objeto.MONTO);
-            }
-        }
-
-        
-
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            
+
 
             if (dgvVentas.SelectedRows.Count > 0)
             {
-            
+
                 int index = dgvVentas.SelectedRows[0].Index;
                 int id = Convert.ToInt32(dgvVentas.Rows[index].Cells[0].Value);
-                
-                frmAEVenta frm = new frmAEVenta(id,login);
+
+                frmAEVenta frm = new frmAEVenta(id, login);
                 frm.Show();
                 this.Close();
 
@@ -107,6 +84,48 @@ namespace PROYECTO_U3
                 MessageBox.Show("No se ha seleccionado ninguna fila.");
             }
         }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            if (dgvVentas.SelectedRows.Count > 0)
+            {
+                DialogResult result = MessageBox.Show("¿Desea eliminar la venta?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+                int index = dgvVentas.SelectedRows[0].Index;
+                if (new VentasDAO().delete(ventas[index].ID))
+                {
+                     Initialize(true);
+                    MessageBox.Show("Se ha eliminado correctamente");
+                }
+                else 
+                {
+                    MessageBox.Show("Ha ocurrido un error");
+                }
+            }
+            else
+            {
+
+                MessageBox.Show("No se ha seleccionado ninguna fila.");
+            }
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            
+            frmMenu menu = new frmMenu(login);
+            menu.Show();
+            this.Close();
+        }
+
+        
+
+        
+
+        
 
         private void frmVenta_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -146,9 +165,27 @@ namespace PROYECTO_U3
             
 
         }
-        public void Initialize(List<Venta> ventas)
+        public void Initialize(bool todas)
         {
-            
+            if (todas)
+            {
+                ventas = new VentasDAO().getAllData();
+            }
+            else {
+                DateTime fechaI = dtpInicio.Value, fechaF = dtpFin.Value;
+                string fechaInicio = fechaI.ToString("yyyy-MM-dd");
+                string fechaFin = fechaF.ToString("yyyy-MM-dd");
+
+
+                ventas = new VentasDAO().getRange(fechaInicio, fechaFin);
+        
+
+                if (corte)
+                {
+                    lblCant.Text = ventas.Count.ToString();
+                    lblPTotal.Text = "$" + ventas.Sum(objeto => objeto.MONTO);
+                }
+            }
             dgvVentas.DataSource = ventas;
             dgvVentas.AllowUserToDeleteRows = false;
             dgvVentas.EditMode = DataGridViewEditMode.EditProgrammatically;
@@ -163,9 +200,8 @@ namespace PROYECTO_U3
         {
         }
 
-        private void btnTodo_Click(object sender, EventArgs e)
-        {
-            Initialize(ventas);
-        }
+        
+
+        
     }
 }
