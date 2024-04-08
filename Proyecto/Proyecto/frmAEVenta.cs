@@ -257,7 +257,7 @@ namespace PROYECTO_U3
             txtCom.Text = "";
             txtExtra.Text = "";
             cbxProducto.SelectedIndex = -1;
-            cbxCategoria.SelectedIndex = -1;
+            cbxCategoria.SelectedItem = "Todas";
         }
         //Filtro por categorias
         private void cbxCategoria_SelectedIndexChanged_1(object sender, EventArgs e)
