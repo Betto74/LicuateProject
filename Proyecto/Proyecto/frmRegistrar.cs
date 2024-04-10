@@ -21,6 +21,7 @@ namespace PROYECTO_U3
             Redondear r = new Redondear();
             r.RedondearPicture(ptbBack, 40);
             r.RedondearBoton(btnAceptar, 30);
+            r.RedondearBoton(btnVolver, 30);
 
             this.login = login; 
         }
@@ -54,7 +55,11 @@ namespace PROYECTO_U3
             if (consultas.register(user))
             {
                 MessageBox.Show(this, "Se ha registrado correctamente");
-                this.Close ();
+                txtNombre.Clear();
+                txtUser.Clear();
+                txtPassword.Clear();
+                txtConfirm.Clear();
+            
             }
             else
             {

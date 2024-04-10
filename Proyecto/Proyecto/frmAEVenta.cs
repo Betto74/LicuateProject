@@ -200,7 +200,7 @@ namespace PROYECTO_U3
                 
             };
             
-            dv.TOTAL = dv.PRECIOCONEXTRA * dv.CANTIDAD;
+            dv.TOTAL = dv.PRECIOCONEXTRA*dv.CANTIDAD;
             subtotal += dv.CANTIDAD * dv.PRECIOCONEXTRA;
             
 
