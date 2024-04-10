@@ -319,7 +319,7 @@ namespace Datos
                         ultimoID = Convert.ToInt32(resultado)+1;
                     }
                     else {
-                        ultimoID = -1;
+                        ultimoID = 1;
                     }
                     
                 }
@@ -358,7 +358,7 @@ namespace Datos
                     }
                     else
                     {
-                        ultimoID = -1;
+                        ultimoID = 1;
                     }
 
                 }

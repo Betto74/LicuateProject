@@ -44,8 +44,9 @@ namespace PROYECTO_U3
 
                 edit = true;
                 idOrden--;
+                detalles.ForEach(objeto => objeto.TOTAL = objeto.CANTIDAD*objeto.PRECIOCONEXTRA);
                 subtotal = detalles.Sum(objeto => objeto.TOTAL);
-
+                MessageBox.Show(""+subtotal);
                 reloadDgv();
             }
 
@@ -199,7 +200,7 @@ namespace PROYECTO_U3
                 
             };
             
-            dv.TOTAL = dv.PRECIOCONEXTRA*dv.CANTIDAD;
+            dv.TOTAL = dv.PRECIOUNITARIO*dv.CANTIDAD;
             subtotal += dv.CANTIDAD * dv.PRECIOCONEXTRA;
             
 
