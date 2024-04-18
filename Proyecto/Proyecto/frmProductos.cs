@@ -18,6 +18,7 @@ namespace PROYECTO_U3
     {
         List<Producto> invProductos;
         frmLogin login;
+        bool ae = false;
         public frmProductos(frmLogin login)
         {
             InitializeComponent();
@@ -27,6 +28,7 @@ namespace PROYECTO_U3
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
+            ae = true;
             frmAEProductos aep = new frmAEProductos(login);
             aep.Show();
             this.Close();
@@ -38,7 +40,7 @@ namespace PROYECTO_U3
             {
                 // Obtener la primera fila seleccionada (en caso de que haya múltiples filas seleccionadas)
                 int index = dgvProductos.SelectedRows[0].Index;
-               
+                ae = true;
                 frmAEProductos aep = new frmAEProductos(invProductos[index], login);
                 aep.Show();
                 this.Close();
@@ -81,8 +83,7 @@ namespace PROYECTO_U3
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            frmMenu menu = new frmMenu(login);
-            menu.Show();
+            
             this.Close();
 
         }
@@ -100,6 +101,16 @@ namespace PROYECTO_U3
             dgvProductos.Columns["ID"].Visible = false;
             dgvProductos.ClearSelection();
 
+        }
+
+        private void frmProductos_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if( !ae)
+            {
+                frmMenu menu = new frmMenu(login);
+                menu.Show();
+            }
+            
         }
     }
 }

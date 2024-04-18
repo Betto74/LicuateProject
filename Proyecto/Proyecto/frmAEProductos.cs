@@ -40,8 +40,7 @@ namespace PROYECTO_U3
         private void btnVolver_Click(object sender, EventArgs e)
         {
 
-            frmProductos frmp = new frmProductos(login);
-            frmp.Show();
+            
 
             this.Close();
         }
@@ -138,7 +137,8 @@ namespace PROYECTO_U3
         private void frmAEProductos_FormClosed(object sender, FormClosedEventArgs e)
         {
 
-
+            frmProductos frmp = new frmProductos(login);
+            frmp.Show();
         }
     }
 }

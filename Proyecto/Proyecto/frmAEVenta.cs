@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
+using System.Net.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -23,7 +25,9 @@ namespace PROYECTO_U3
         bool edit;//true:edit / false:add
         double subtotal = 0;
         int editarInd = -1, idOrden, idUsuario;
-        
+        bool atras = true;
+        Font font = new Font("Arial", 8, FontStyle.Regular, GraphicsUnit.Point);
+        Font negritas = new Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Point);
         public frmAEVenta(int id, frmLogin login)
         {
             InitializeComponent();
@@ -84,6 +88,12 @@ namespace PROYECTO_U3
                             && new DetallesVentaDAO().insert(detalles))
                         {
                             MessageBox.Show("Se ha producido exitosamente la venta");
+                            //Aqui va la funcion de imprimir
+                            printDocument1 = new PrintDocument();
+                            PrinterSettings ps = new PrinterSettings();
+                            printDocument1.PrinterSettings = ps;
+                            printDocument1.PrintPage += Imprimir;
+                            printDocument1.Print();
                         }
                         else
                         {
@@ -109,6 +119,7 @@ namespace PROYECTO_U3
                     lblPIva.Text = "$";
                     lblPTotal.Text = "$";
                     dgvOrden.DataSource = null;
+                    idOrden = new VentasDAO().getId();
                 }
 
             }
@@ -159,8 +170,7 @@ namespace PROYECTO_U3
         private void btnVolver_Click(object sender, EventArgs e)
         {
             
-            frmVenta frm = new frmVenta(false,login);
-            frm.Show();
+           
             this.Close();
        
         }
@@ -235,7 +245,38 @@ namespace PROYECTO_U3
              reloadDgv();
         }
 
-        
+        //Funcion imprimir
+        private void Imprimir(object sender, PrintPageEventArgs e)
+        {
+            int X = 0, Y = 10;
+            try
+            {
+                
+                e.Graphics.DrawString("JUGOTERAPIA", font, Brushes.Black, new RectangleF(X, Y, 200, 100));
+                e.Graphics.DrawString("María Concepción Sánchez #58", font, Brushes.Black, new RectangleF(X, Y += 12, 170, 50));
+                e.Graphics.DrawString("Moroleón, Gto. México", font, Brushes.Black, new RectangleF(X, Y += 12, 170, 50));
+                e.Graphics.DrawString("445 458 1233", font, Brushes.Black, new RectangleF(X, Y+=12, 170, 50));
+                Y += 12;
+                e.Graphics.DrawString("Producto", font, Brushes.Black, new RectangleF(X, Y, 100, 50));
+                e.Graphics.DrawString("Unit", font, Brushes.Black, new RectangleF(X + 100, Y, 170, 50));
+                e.Graphics.DrawString("Cant", font, Brushes.Black, new RectangleF(X + 123, Y, 170, 50));
+                e.Graphics.DrawString("Sub", font, Brushes.Black, new RectangleF(X + 150, Y, 170, 50));
+                Y += 12;
+                for (int i = 0; i < dgvOrden.RowCount; i++)
+                {
+                    
+                    e.Graphics.DrawString(detalles[i].NOMBRE_PRODUCTO.ToString(), font, Brushes.Black, new RectangleF(X, Y , 100, 50));
+                    e.Graphics.DrawString("$" + detalles[i].PRECIOCONEXTRA, font, Brushes.Black, new RectangleF(X+100, Y, 170, 50));
+                    e.Graphics.DrawString(detalles[i].CANTIDAD.ToString(), font, Brushes.Black, new RectangleF(X+130, Y, 170, 50));
+                    e.Graphics.DrawString("$" + detalles[i].TOTAL.ToString(), font, Brushes.Black, new RectangleF(X + 150, Y, 170, 50));
+                    Y+= (int)Math.Ceiling(detalles[i].NOMBRE_PRODUCTO.Length / 10.0) * 12;
+                }
+                e.Graphics.DrawString("Total     " + lblPSub.Text, negritas, Brushes.Black, new RectangleF(X , Y + 10, 170, 50));
+            }
+            
+            catch (Exception ex){ MessageBox.Show(ex.Message); }
+
+        }
 
 
         //Recargar dgv y labels
@@ -279,7 +320,10 @@ namespace PROYECTO_U3
 
         private void frmAEVenta_FormClosed(object sender, FormClosedEventArgs e)
         {
-           
+            if (atras) {
+                frmVenta frm = new frmVenta(false, login);
+                frm.Show();
+            }
         }
 
 
