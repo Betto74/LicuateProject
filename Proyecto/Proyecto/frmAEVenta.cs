@@ -50,7 +50,7 @@ namespace PROYECTO_U3
                 idOrden--;
                 detalles.ForEach(objeto => objeto.TOTAL = objeto.CANTIDAD*objeto.PRECIOCONEXTRA);
                 subtotal = detalles.Sum(objeto => objeto.TOTAL);
-                MessageBox.Show(""+subtotal);
+                //MessageBox.Show(""+subtotal);
                 reloadDgv();
             }
 
@@ -78,7 +78,7 @@ namespace PROYECTO_U3
                         {
                             ID = idOrden,
                             FECHA = DateTime.Now,
-                            MONTO = subtotal * 1.16,
+                            MONTO = subtotal,
                             ID_USUARIO = idUsuario,
                             ID_CLIENTE = new VentasDAO().getCliente()
 
@@ -94,6 +94,21 @@ namespace PROYECTO_U3
                             printDocument1.PrinterSettings = ps;
                             printDocument1.PrintPage += Imprimir;
                             printDocument1.Print();
+                            Timer time = new Timer();
+                            time.Tick += new EventHandler(TickEventHandler);
+                            time.Interval = 2000;
+                            time.Start();
+
+                            void TickEventHandler(object source, EventArgs eventArgs)
+                            {
+                                time.Stop();
+                                printDocument2 = new PrintDocument();
+                                PrinterSettings ps2 = new PrinterSettings();
+                                printDocument2.PrinterSettings = ps2;
+                                printDocument2.PrintPage += ImprimirT;
+                                printDocument2.Print();
+                            }
+
                         }
                         else
                         {
@@ -101,7 +116,7 @@ namespace PROYECTO_U3
                         }
                     }
                     else {
-                        if (new VentasDAO().update(subtotal * 1.16, detalles[0].ID_ORDEN)
+                        if (new VentasDAO().update(subtotal, detalles[0].ID_ORDEN)
                             && new DetallesVentaDAO().delete(idOrden) 
                             && new DetallesVentaDAO().insert(detalles))
                         {
@@ -113,7 +128,7 @@ namespace PROYECTO_U3
                         }
                     }
                     
-                    detalles.Clear();
+                    
                     subtotal = 0;
                     lblPSub.Text = "$";
                     lblPIva.Text = "$";
@@ -251,33 +266,57 @@ namespace PROYECTO_U3
             int X = 0, Y = 10;
             try
             {
-                
+
                 e.Graphics.DrawString("JUGOTERAPIA", font, Brushes.Black, new RectangleF(X, Y, 200, 100));
                 e.Graphics.DrawString("María Concepción Sánchez #58", font, Brushes.Black, new RectangleF(X, Y += 12, 170, 50));
                 e.Graphics.DrawString("Moroleón, Gto. México", font, Brushes.Black, new RectangleF(X, Y += 12, 170, 50));
-                e.Graphics.DrawString("445 458 1233", font, Brushes.Black, new RectangleF(X, Y+=12, 170, 50));
+                e.Graphics.DrawString("445 458 1233", font, Brushes.Black, new RectangleF(X, Y += 12, 170, 50));
+                e.Graphics.DrawString("=====================", negritas, Brushes.Black, new RectangleF(X, Y += 12, 185, 50));
                 Y += 12;
                 e.Graphics.DrawString("Producto", font, Brushes.Black, new RectangleF(X, Y, 100, 50));
                 e.Graphics.DrawString("Unit", font, Brushes.Black, new RectangleF(X + 100, Y, 170, 50));
                 e.Graphics.DrawString("Cant", font, Brushes.Black, new RectangleF(X + 123, Y, 170, 50));
                 e.Graphics.DrawString("Sub", font, Brushes.Black, new RectangleF(X + 150, Y, 170, 50));
-                Y += 12;
+                Y += 15;
                 for (int i = 0; i < dgvOrden.RowCount; i++)
                 {
-                    
-                    e.Graphics.DrawString(detalles[i].NOMBRE_PRODUCTO.ToString(), font, Brushes.Black, new RectangleF(X, Y , 100, 50));
-                    e.Graphics.DrawString("$" + detalles[i].PRECIOCONEXTRA, font, Brushes.Black, new RectangleF(X+100, Y, 170, 50));
-                    e.Graphics.DrawString(detalles[i].CANTIDAD.ToString(), font, Brushes.Black, new RectangleF(X+130, Y, 170, 50));
+
+                    e.Graphics.DrawString(detalles[i].NOMBRE_PRODUCTO.ToString(), font, Brushes.Black, new RectangleF(X, Y, 100, 50));
+                    e.Graphics.DrawString("$" + detalles[i].PRECIOCONEXTRA, font, Brushes.Black, new RectangleF(X + 100, Y, 170, 50));
+                    e.Graphics.DrawString(detalles[i].CANTIDAD.ToString(), font, Brushes.Black, new RectangleF(X + 130, Y, 170, 50));
                     e.Graphics.DrawString("$" + detalles[i].TOTAL.ToString(), font, Brushes.Black, new RectangleF(X + 150, Y, 170, 50));
-                    Y+= (int)Math.Ceiling(detalles[i].NOMBRE_PRODUCTO.Length / 10.0) * 12;
+                    Y += (int)Math.Ceiling(detalles[i].NOMBRE_PRODUCTO.Length / 10.0) * 12;
                 }
-                e.Graphics.DrawString("Total     " + lblPSub.Text, negritas, Brushes.Black, new RectangleF(X , Y + 10, 170, 50));
+                e.Graphics.DrawString("=====================", negritas, Brushes.Black, new RectangleF(X, Y, 185, 50));
+                Y += 12;
+                e.Graphics.DrawString("Total     " + lblPTotal.Text, negritas, Brushes.Black, new RectangleF(X, Y + 10, 170, 50));
+                
             }
             
             catch (Exception ex){ MessageBox.Show(ex.Message); }
 
         }
 
+
+
+        //Funcion imprimir Ticket para Trabajador
+        // Funcion imprimir Ticket para Trabajador
+        private void ImprimirT(object sender, PrintPageEventArgs e)
+        {
+            
+            int X = 0, Y = 10;
+            
+            for (int i = 0; i < detalles.Count; i++)
+            {
+                
+                e.Graphics.DrawString(detalles[i].NOMBRE_PRODUCTO.ToString() + "->", font, Brushes.Black, new RectangleF(X, Y, 200, 50));
+                e.Graphics.DrawString(detalles[i].CANTIDAD.ToString(), font, Brushes.Black, new RectangleF(X + 120, Y, 50, 50));
+                e.Graphics.DrawString(detalles[i].COMENTARIOS.ToString(), font, Brushes.Black, new RectangleF(X, Y += 15, 240, 50)); // Incrementa Y después de imprimir los comentarios
+                Y += (int)Math.Ceiling(detalles[i].COMENTARIOS.Length / 10.0) * 12;
+            }
+            detalles.Clear();
+
+        }
 
         //Recargar dgv y labels
         private void reloadDgv() {
@@ -291,9 +330,9 @@ namespace PROYECTO_U3
             dgvOrden.Columns["ID_ORDEN"].Visible = false;
             dgvOrden.Columns["ID_PRODUCTO"].Visible = false;
 
-            lblPSub.Text = "$" + subtotal;
-            lblPIva.Text = "$" + subtotal * .16;
-            lblPTotal.Text = "$" + subtotal * 1.16;
+            lblPSub.Text = "$" + subtotal*.84;
+            lblPIva.Text = "$" + subtotal*.16;
+            lblPTotal.Text = "$" + subtotal;
 
             txtCantidad.Text = "0";
             txtCom.Text = "";
@@ -326,6 +365,7 @@ namespace PROYECTO_U3
             }
         }
 
+      
 
     }
 }
