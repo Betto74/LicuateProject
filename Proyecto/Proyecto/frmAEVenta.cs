@@ -61,7 +61,7 @@ namespace PROYECTO_U3
             this.login = login;
             idUsuario = login.user.ID;
         }
-
+        
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             

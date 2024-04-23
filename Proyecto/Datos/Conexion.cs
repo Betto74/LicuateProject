@@ -11,6 +11,14 @@ namespace Datos
     {
 
         public static MySqlConnection conexion;
+
+        /// <summary>
+        /// Efectua la conexión a la base de datos
+        /// </summary>
+        /// <returns>
+        /// true:la conexión fue exitosa 
+        /// false:la conexión no fue exitosa}
+        /// </returns>
         public static bool Conectar()
         {
 
@@ -37,7 +45,9 @@ namespace Datos
             }
 
         }
-
+        /// <summary>
+        /// Desconecta la conexión
+        /// </summary>
         public static void Desconectar()
         {
             if (conexion != null && conexion.State == System.Data.ConnectionState.Open)
