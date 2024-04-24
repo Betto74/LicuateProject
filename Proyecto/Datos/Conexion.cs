@@ -17,7 +17,7 @@ namespace Datos
         /// </summary>
         /// <returns>
         /// true:la conexión fue exitosa 
-        /// false:la conexión no fue exitosa}
+        /// false:la conexión no fue exitosa
         /// </returns>
         public static bool Conectar()
         {

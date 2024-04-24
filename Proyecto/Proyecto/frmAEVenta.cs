@@ -1,4 +1,4 @@
-﻿using Datos;
+﻿ using Datos;
 using Modelos;
 using System;
 using System.Collections.Generic;
@@ -28,6 +28,7 @@ namespace PROYECTO_U3
         bool atras = true;
         Font font = new Font("Arial", 8, FontStyle.Regular, GraphicsUnit.Point);
         Font negritas = new Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Point);
+
         public frmAEVenta(int id, frmLogin login)
         {
             InitializeComponent();
@@ -88,6 +89,8 @@ namespace PROYECTO_U3
                             && new DetallesVentaDAO().insert(detalles))
                         {
                             MessageBox.Show("Se ha producido exitosamente la venta");
+
+
                             //Aqui va la funcion de imprimir
                             printDocument1 = new PrintDocument();
                             PrinterSettings ps = new PrinterSettings();
@@ -98,6 +101,7 @@ namespace PROYECTO_U3
                             time.Tick += new EventHandler(TickEventHandler);
                             time.Interval = 2000;
                             time.Start();
+
 
                             void TickEventHandler(object source, EventArgs eventArgs)
                             {
@@ -171,23 +175,18 @@ namespace PROYECTO_U3
         {
             if (dgvOrden.SelectedRows.Count > 0)
             {
-
                 subtotal -= detalles[dgvOrden.SelectedRows[0].Index].TOTAL;
                 detalles.RemoveAt(dgvOrden.SelectedRows[0].Index);
                 reloadDgv();
             }
             else
             {
-
                 MessageBox.Show("No se ha seleccionado ninguna fila.");
             }
         }
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            
-           
             this.Close();
-       
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
@@ -259,8 +258,11 @@ namespace PROYECTO_U3
             
              reloadDgv();
         }
-
-        //Funcion imprimir
+        /// <summary>
+        /// Imprime un ticket con los detalles de la venta y información adicional de la jugueria
+        /// </summary>
+        /// <param name="sender">Evento sender</param>
+        /// <param name="e">Evento e</param>
         private void Imprimir(object sender, PrintPageEventArgs e)
         {
             int X = 0, Y = 10;
@@ -297,10 +299,11 @@ namespace PROYECTO_U3
 
         }
 
-
-
-        //Funcion imprimir Ticket para Trabajador
-        // Funcion imprimir Ticket para Trabajador
+        /// <summary>
+        /// Imprime el ticket con los detalles de los productos vendidos para el trabajador 
+        /// </summary>
+        /// <param name="sender">Evento sender</param>
+        /// <param name="e">Evento e</param>
         private void ImprimirT(object sender, PrintPageEventArgs e)
         {
             

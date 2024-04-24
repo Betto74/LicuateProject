@@ -13,12 +13,15 @@ namespace Datos
 {
     
     public class LoginDAO
-    {   
+    {
         /// <summary>
-        /// 
+        /// Inserta un usuario con los parametros especificados
         /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
+        /// <param name="user">Lista con todos los elementos del usuario</param>
+        /// <returns>
+        /// true:Si la operación fue exitosa
+        /// false: Si la operación no fue existosa
+        /// </returns>
         public Boolean register(Usuario user)
         {
 
@@ -54,7 +57,14 @@ namespace Datos
             }
 
         }
-
+        /// <summary>
+        /// Obtiene un usuario de la BD con los parametros especificados
+        /// </summary>
+        /// <param name="USERNAME">Nombre de usuario proporcionado</param>
+        /// <param name="PASSWORD">Contraseña proporcionada</param>
+        /// <returns>
+        /// Un objeto correspondiente al usuario con esas credenciales
+        /// </returns>
         public Usuario getUser(String USERNAME, String PASSWORD)
         {
             Usuario user = null;

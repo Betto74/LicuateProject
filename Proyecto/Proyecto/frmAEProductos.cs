@@ -39,9 +39,6 @@ namespace PROYECTO_U3
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-
-            
-
             this.Close();
         }
 
@@ -51,7 +48,6 @@ namespace PROYECTO_U3
         }
 
         
-
         private void fillData(Producto p)
         {
             txtNombre.Text = p.NOMBRE;
