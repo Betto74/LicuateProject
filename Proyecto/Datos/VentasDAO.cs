@@ -63,6 +63,12 @@ namespace Datos
             }
         }
 
+        /// <summary>
+        /// Obtiene todos los registros de la tabla ORDEN de la BD
+        /// </summary>
+        /// <returns>
+        /// Una lista con todas las ventas almacenadas en la BD
+        /// </returns>
         public List<Venta> getAllData()
         {
 
@@ -120,6 +126,14 @@ namespace Datos
             }
         }
 
+        /// <summary>
+        /// Obtiene todas las ventas realizadas en el rango especificado
+        /// </summary>
+        /// <param name="FECHAINICIO">Fecha de inicio</param>
+        /// <param name="FECHAFIN">Fecha final</param>
+        /// <returns>
+        /// Una lista con las ventas almacenadas en la BD dentro deL un rango de fechas específicadas 
+        /// </returns>
         public List<Venta> getRange(String FECHAINICIO, String FECHAFIN)
         {
 
@@ -184,6 +198,14 @@ namespace Datos
             }
         }
 
+        /// <summary>
+        /// Inserta una orden con los parametros especificados
+        /// </summary>
+        /// <param name="venta">Lista con todas las caracteristicas de la venta</param>
+        /// <returns>
+        /// true:Si la operación fue exitosa
+        /// false: Si la operación no fue existosa
+        /// </returns>
         public Boolean insert(Venta venta)
         {
 
@@ -223,6 +245,15 @@ namespace Datos
 
         }
 
+        /// <summary>
+        ///  Edita/actualiza la información de la orden especificada
+        /// </summary>
+        /// <param name="MONTO">Cantidad monetaria</param>
+        /// <param name="ID">Identificador de la orden</param>
+        /// <returns>
+        /// true:Si la operación fue exitosa
+        /// false: Si la operación no fue existosa
+        /// </returns>
         public Boolean update(double MONTO, int ID)
         {
 
@@ -262,6 +293,14 @@ namespace Datos
 
         }
 
+        /// <summary>
+        /// Elimina la orden especificada
+        /// </summary>
+        /// <param name="ID">Identificador de la orden a eliminar</param>
+        /// <returns>
+        /// true:Si la operación fue exitosa
+        /// false: Si la operación no fue existosa
+        /// </returns>
         public Boolean delete(int ID)
         {
 
@@ -296,6 +335,12 @@ namespace Datos
 
         }
 
+        /// <summary>
+        /// Obtiene el último ID de la tabla ORDEN
+        /// </summary>
+        /// <returns>
+        /// Devuelve el último ID insertado en la tabla ORDEN
+        /// </returns>
         public int getId()
         {
             int ultimoID = 0;
@@ -334,6 +379,12 @@ namespace Datos
             
         }
 
+        /// <summary>
+        /// Obtiene el último ID del cliente de la tabla ORDEN
+        /// </summary>
+        /// <returns>
+        /// Devuelve el último identificador del cliente 
+        /// </returns>
         public int getCliente()
         {
             int ultimoID = 0;

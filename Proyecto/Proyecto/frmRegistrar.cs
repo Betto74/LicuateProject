@@ -79,14 +79,14 @@ namespace PROYECTO_U3
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            frmMenu menu = new frmMenu(login);
-            menu.Show();
+            
             this.Close();
         }
 
         private void frmRegistrar_FormClosed(object sender, FormClosedEventArgs e)
         {
-            
+            frmMenu menu = new frmMenu(login);
+            menu.Show();
         }
     }
 }

@@ -19,6 +19,7 @@ namespace PROYECTO_U3
         List<Venta> ventas;
         frmLogin login;
         bool corte;
+        bool atras = true;
         public frmVenta(bool corte,frmLogin login)
         {
             InitializeComponent();
@@ -57,6 +58,7 @@ namespace PROYECTO_U3
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
+            atras = false;
             
             frmAEVenta frm = new frmAEVenta(-1,login);
             frm.Show();
@@ -72,7 +74,7 @@ namespace PROYECTO_U3
 
                 int index = dgvVentas.SelectedRows[0].Index;
                 int id = Convert.ToInt32(dgvVentas.Rows[index].Cells[0].Value);
-
+                atras = false;
                 frmAEVenta frm = new frmAEVenta(id, login);
                 frm.Show();
                 this.Close();
@@ -116,8 +118,7 @@ namespace PROYECTO_U3
         private void btnVolver_Click(object sender, EventArgs e)
         {
             
-            frmMenu menu = new frmMenu(login);
-            menu.Show();
+            
             this.Close();
         }
 
@@ -127,12 +128,7 @@ namespace PROYECTO_U3
 
         
 
-        private void frmVenta_FormClosed(object sender, FormClosedEventArgs e)
-        {
-          //  this.Hide();
-           // frmMenu menu = new frmMenu(false);
-           // menu.Show();
-        }
+        
 
         private void dtpFin_ValueChanged(object sender, EventArgs e)
         {
@@ -200,8 +196,12 @@ namespace PROYECTO_U3
         {
         }
 
-        
-
-        
+        private void frmVenta_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (atras) {
+                frmMenu menu = new frmMenu(login);
+                menu.Show();    
+            }
+        }
     }
 }

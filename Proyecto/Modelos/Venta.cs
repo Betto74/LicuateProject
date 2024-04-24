@@ -15,5 +15,7 @@ namespace Modelos
         public int ID_CLIENTE { get; set; }
         public String NOMBRE_USUARIO { get; set; }
 
+        
+
     }
 }

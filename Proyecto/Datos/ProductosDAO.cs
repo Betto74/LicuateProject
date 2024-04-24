@@ -11,6 +11,7 @@ namespace Datos
 {
     public class ProductosDAO
     {
+
         public Producto getData(int ID)
         {
             Producto prod = null;
@@ -64,6 +65,12 @@ namespace Datos
             }
         }
 
+        /// <summary>
+        /// Obtiene todos los registros de la tabla PRODUCTS de la BD
+        /// </summary>
+        /// <returns>
+        /// Una lista con todos los productos almacenados en la BD
+        /// </returns>
         public List<Producto> getAllData()
         {
 
@@ -122,7 +129,14 @@ namespace Datos
             }
         }
 
-
+        /// <summary>
+        /// Inserta un producto con los parametros especificados
+        /// </summary>
+        /// <param name="prod">Lista con todas las caracteristicas del producto</param>
+        /// <returns>
+        ///  true:Si la operación fue exitosa
+        /// false: Si la operación no fue existosa
+        /// </returns>
         public Boolean insert(Producto prod)
         {
 
@@ -162,7 +176,14 @@ namespace Datos
         }
 
 
-
+        /// <summary>
+        ///  Edita/actualiza la información del  producto especificado
+        /// </summary>
+        /// <param name="prod">Lista con todas las caracteristicas del producto</param>
+        /// <returns>
+        ///  true:Si la operación fue exitosa
+        /// false: Si la operación no fue existosa
+        /// </returns>
         public Boolean update(Producto prod)
         {
 
@@ -206,8 +227,15 @@ namespace Datos
             }
 
         }
-
-
+   
+        /// <summary>
+        /// Elimina el producto especificado 
+        /// </summary>
+        /// <param name="ID">Identificador del producto a eliminar</param>
+        /// <returns>
+        /// true:Si la operación fue exitosa
+        /// false: Si la operación no fue existosa
+        /// </returns>
         public Boolean delete(int ID)
         {
 

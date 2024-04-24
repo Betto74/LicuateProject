@@ -11,8 +11,17 @@ using MySql.Data.MySqlClient;
 
 namespace Datos
 {
+    
     public class LoginDAO
     {
+        /// <summary>
+        /// Inserta un usuario con los parametros especificados
+        /// </summary>
+        /// <param name="user">Lista con todos los elementos del usuario</param>
+        /// <returns>
+        /// true:Si la operación fue exitosa
+        /// false: Si la operación no fue existosa
+        /// </returns>
         public Boolean register(Usuario user)
         {
 
@@ -48,7 +57,14 @@ namespace Datos
             }
 
         }
-
+        /// <summary>
+        /// Obtiene un usuario de la BD con los parametros especificados
+        /// </summary>
+        /// <param name="USERNAME">Nombre de usuario proporcionado</param>
+        /// <param name="PASSWORD">Contraseña proporcionada</param>
+        /// <returns>
+        /// Un objeto correspondiente al usuario con esas credenciales
+        /// </returns>
         public Usuario getUser(String USERNAME, String PASSWORD)
         {
             Usuario user = null;
@@ -103,48 +119,6 @@ namespace Datos
 
         }
 
-        /*public bool user(String USERNAME, String PASSWORD)
-        {
-
-            if (Conexion.Conectar())
-            {
-                try
-                {
-
-                    String select = @"SELECT * FROM USUARIOS"+
-                                    " WHERE USERNAME = @USERNAME and PASSWORD = SHA2(@PASSWORD,256)";
-
-                    //Crear el dataadapter
-                    MySqlCommand sentencia = new MySqlCommand(select);
-                    //Asignar los parámetros
-                    sentencia.Parameters.AddWithValue("@USERNAME", USERNAME);
-                    sentencia.Parameters.AddWithValue("@PASSWORD", PASSWORD);
-
-                    sentencia.Connection = Conexion.conexion;
-
-                    using (MySqlDataReader reader = sentencia.ExecuteReader())
-                    {
-                        // Si el lector tiene alguna fila, significa que se encontró un usuario con las características especificadas
-                        if (reader.HasRows)
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    }
-                }
-                finally
-                {
-                    Conexion.Desconectar();
-                }
-            }
-            else
-            {
-                return false;
-            }
-
-        }*/
+     
     }
 }

@@ -14,7 +14,7 @@ namespace PROYECTO_U3
     public partial class frmMenu : Form
     {
         frmLogin login;
-        
+        bool atras = true;
         public frmMenu(frmLogin log)
         {
             InitializeComponent();
@@ -43,6 +43,7 @@ namespace PROYECTO_U3
         {
             frmRegistrar frmRegistrar = new frmRegistrar(login);
             frmRegistrar.Show();
+            atras = false;
             this.Close();
         }
 
@@ -50,6 +51,7 @@ namespace PROYECTO_U3
         {
             frmVenta venta = new frmVenta(false, login);
             venta.Show();
+            atras = false;
             this.Close();
         }
 
@@ -57,6 +59,7 @@ namespace PROYECTO_U3
         {
             frmProductos productos = new frmProductos(login);
             productos.Show();
+            atras = false;
             this.Close();
         }
 
@@ -64,16 +67,23 @@ namespace PROYECTO_U3
         {
             frmVenta venta = new frmVenta(true, login);
             venta.Show();
+            atras = false;
             this.Close();
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
             login.Show();
+            atras = false;
             this.Close();
             
         }
 
-        
+        private void frmMenu_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (atras) {
+                login.Show();
+            }
+        }
     }
 }

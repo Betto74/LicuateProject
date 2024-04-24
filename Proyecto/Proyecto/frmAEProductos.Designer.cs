@@ -46,9 +46,10 @@
             this.lblNombre.BackColor = System.Drawing.Color.Transparent;
             this.lblNombre.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNombre.ForeColor = System.Drawing.Color.White;
-            this.lblNombre.Location = new System.Drawing.Point(187, 71);
+            this.lblNombre.Location = new System.Drawing.Point(249, 87);
+            this.lblNombre.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNombre.Name = "lblNombre";
-            this.lblNombre.Size = new System.Drawing.Size(86, 25);
+            this.lblNombre.Size = new System.Drawing.Size(108, 32);
             this.lblNombre.TabIndex = 0;
             this.lblNombre.Text = "Nombre";
             // 
@@ -58,9 +59,10 @@
             this.lblDescripcion.BackColor = System.Drawing.Color.Transparent;
             this.lblDescripcion.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDescripcion.ForeColor = System.Drawing.Color.White;
-            this.lblDescripcion.Location = new System.Drawing.Point(157, 125);
+            this.lblDescripcion.Location = new System.Drawing.Point(209, 154);
+            this.lblDescripcion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDescripcion.Name = "lblDescripcion";
-            this.lblDescripcion.Size = new System.Drawing.Size(116, 25);
+            this.lblDescripcion.Size = new System.Drawing.Size(149, 32);
             this.lblDescripcion.TabIndex = 1;
             this.lblDescripcion.Text = "Descripcion";
             // 
@@ -70,9 +72,10 @@
             this.lblCategoria.BackColor = System.Drawing.Color.Transparent;
             this.lblCategoria.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCategoria.ForeColor = System.Drawing.Color.White;
-            this.lblCategoria.Location = new System.Drawing.Point(175, 264);
+            this.lblCategoria.Location = new System.Drawing.Point(233, 325);
+            this.lblCategoria.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCategoria.Name = "lblCategoria";
-            this.lblCategoria.Size = new System.Drawing.Size(98, 25);
+            this.lblCategoria.Size = new System.Drawing.Size(124, 32);
             this.lblCategoria.TabIndex = 2;
             this.lblCategoria.Text = "Categoria";
             // 
@@ -82,35 +85,41 @@
             this.lblPrecio.BackColor = System.Drawing.Color.Transparent;
             this.lblPrecio.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPrecio.ForeColor = System.Drawing.Color.White;
-            this.lblPrecio.Location = new System.Drawing.Point(454, 264);
+            this.lblPrecio.Location = new System.Drawing.Point(605, 325);
+            this.lblPrecio.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPrecio.Name = "lblPrecio";
-            this.lblPrecio.Size = new System.Drawing.Size(68, 25);
+            this.lblPrecio.Size = new System.Drawing.Size(86, 32);
             this.lblPrecio.TabIndex = 3;
             this.lblPrecio.Text = "Precio";
             // 
             // txtNombre
             // 
             this.txtNombre.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNombre.Location = new System.Drawing.Point(279, 71);
+            this.txtNombre.Location = new System.Drawing.Point(372, 87);
+            this.txtNombre.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtNombre.MaxLength = 45;
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(349, 29);
+            this.txtNombre.Size = new System.Drawing.Size(464, 34);
             this.txtNombre.TabIndex = 4;
             // 
             // txtDescripcion
             // 
             this.txtDescripcion.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDescripcion.Location = new System.Drawing.Point(279, 125);
+            this.txtDescripcion.Location = new System.Drawing.Point(372, 154);
+            this.txtDescripcion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtDescripcion.MaxLength = 45;
             this.txtDescripcion.Multiline = true;
             this.txtDescripcion.Name = "txtDescripcion";
-            this.txtDescripcion.Size = new System.Drawing.Size(349, 108);
+            this.txtDescripcion.Size = new System.Drawing.Size(464, 132);
             this.txtDescripcion.TabIndex = 5;
             // 
             // txtPrecio
             // 
             this.txtPrecio.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPrecio.Location = new System.Drawing.Point(528, 260);
+            this.txtPrecio.Location = new System.Drawing.Point(704, 320);
+            this.txtPrecio.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtPrecio.Name = "txtPrecio";
-            this.txtPrecio.Size = new System.Drawing.Size(100, 29);
+            this.txtPrecio.Size = new System.Drawing.Size(132, 34);
             this.txtPrecio.TabIndex = 6;
             // 
             // cbxCategoria
@@ -126,9 +135,10 @@
             "Fruta",
             "Postre",
             "Bebida Caliente"});
-            this.cbxCategoria.Location = new System.Drawing.Point(279, 260);
+            this.cbxCategoria.Location = new System.Drawing.Point(372, 320);
+            this.cbxCategoria.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbxCategoria.Name = "cbxCategoria";
-            this.cbxCategoria.Size = new System.Drawing.Size(162, 29);
+            this.cbxCategoria.Size = new System.Drawing.Size(215, 36);
             this.cbxCategoria.TabIndex = 7;
             // 
             // btnAceptar
@@ -142,9 +152,10 @@
             this.btnAceptar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAceptar.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAceptar.ForeColor = System.Drawing.Color.White;
-            this.btnAceptar.Location = new System.Drawing.Point(258, 349);
+            this.btnAceptar.Location = new System.Drawing.Point(344, 430);
+            this.btnAceptar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAceptar.Name = "btnAceptar";
-            this.btnAceptar.Size = new System.Drawing.Size(99, 34);
+            this.btnAceptar.Size = new System.Drawing.Size(132, 42);
             this.btnAceptar.TabIndex = 8;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.TextColor = System.Drawing.Color.White;
@@ -162,9 +173,10 @@
             this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnVolver.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnVolver.ForeColor = System.Drawing.Color.White;
-            this.btnVolver.Location = new System.Drawing.Point(440, 349);
+            this.btnVolver.Location = new System.Drawing.Point(587, 430);
+            this.btnVolver.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(99, 34);
+            this.btnVolver.Size = new System.Drawing.Size(132, 42);
             this.btnVolver.TabIndex = 9;
             this.btnVolver.Text = "Volver";
             this.btnVolver.TextColor = System.Drawing.Color.White;
@@ -173,11 +185,11 @@
             // 
             // frmAEProductos
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::PROYECTO_U3.Properties.Resources.Background;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1067, 554);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.cbxCategoria);
@@ -190,6 +202,7 @@
             this.Controls.Add(this.lblNombre);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmAEProductos";
             this.Text = "frmAEProductos";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmAEProductos_FormClosed);

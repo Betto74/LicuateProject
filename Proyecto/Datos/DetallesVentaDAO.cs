@@ -11,6 +11,13 @@ namespace Datos
 {
     public class DetallesVentaDAO
     {
+        /// <summary>
+        ///  Obtiene los detalles de la orden que se encuentran almacenados en la BD
+        /// </summary>
+        /// <param name="ID">Identificador de la orden deseada</param>
+        /// <returns>
+        /// Una lista con los elementos
+        /// </returns>
         public List<DetallesVenta> getData(int ID)
         {
             List<DetallesVenta> invdv = new List<DetallesVenta>();
@@ -73,7 +80,14 @@ namespace Datos
             }
         }
 
-
+        /// <summary>
+        /// Inserta los detalles de orden con los parametros especificados
+        /// </summary>
+        /// <param name="detalles">Lista con todos los detalles de la orden</param>
+        /// <returns>
+        /// true:Si la operación fue exitosa
+        /// false: Si la operación no fue existosa
+        /// </returns>
         public Boolean insert(List<DetallesVenta> detalles)
         {
 
@@ -125,7 +139,14 @@ namespace Datos
             }
 
         }
-
+        /// <summary>
+        /// Elimina el registro especificado 
+        /// </summary>
+        /// <param name="ID">Identificador de la orden que se desea eliminar</param>
+        /// <returns>
+        /// true:Si la operación fue exitosa
+        /// false: Si la operación no fue existosa
+        /// </returns>
         public Boolean delete(int ID)
         {
 
