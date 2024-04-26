@@ -23,6 +23,7 @@ namespace PROYECTO_U3
             r.RedondearBoton(btnVentas, 30);
             r.RedondearBoton(btnRegistrar, 30);
             r.RedondearBoton(btnProductos, 30);
+            r.RedondearBoton(btnVolver, 30);
             r.RedondearBoton(btnCorte, 30);
 
             

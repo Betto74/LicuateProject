@@ -23,7 +23,13 @@ namespace PROYECTO_U3
         public frmVenta(bool corte,frmLogin login)
         {
             InitializeComponent();
-            
+            Redondear r = new Redondear();
+            r.RedondearBoton(btnEditar, 30);
+            r.RedondearBoton(btnAgregar, 30);
+            r.RedondearBoton(btnEliminar, 30);
+            r.RedondearBoton(btnFiltrar, 30);
+            r.RedondearBoton(btnTodo, 30);
+            r.RedondearBoton(btnVolver, 30);
             if (!corte)
             {
                 
