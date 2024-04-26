@@ -24,6 +24,7 @@ namespace PROYECTO_U3
             InitializeComponent();
             Initialize();
             this.login = login;
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)

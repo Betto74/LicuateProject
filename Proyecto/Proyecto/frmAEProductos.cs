@@ -26,7 +26,8 @@ namespace PROYECTO_U3
             this.login = login;
             this.producto = producto;   
             bandera = false;
-            
+            this.StartPosition = FormStartPosition.CenterScreen;
+
         }
 
         public frmAEProductos(frmLogin login)
@@ -34,7 +35,9 @@ namespace PROYECTO_U3
             InitializeComponent();
             this.login = login;
             bandera = true;
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
+
 
 
         private void btnVolver_Click(object sender, EventArgs e)

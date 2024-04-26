@@ -134,6 +134,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmLogin";
             this.Text = "frmLogin";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmLogin_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.ptbBack)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

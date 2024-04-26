@@ -61,6 +61,7 @@ namespace PROYECTO_U3
 
             this.login = login;
             idUsuario = login.user.ID;
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
         
         private void btnAceptar_Click(object sender, EventArgs e)

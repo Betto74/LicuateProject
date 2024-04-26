@@ -37,6 +37,7 @@ namespace PROYECTO_U3
 
       
             this.login = log;
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void btnRegistrar_Click(object sender, EventArgs e)
