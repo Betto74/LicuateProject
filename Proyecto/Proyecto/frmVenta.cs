@@ -43,6 +43,7 @@ namespace PROYECTO_U3
             }
             this.corte = corte;
             this.login = login;
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void btnVer_Click(object sender, EventArgs e)

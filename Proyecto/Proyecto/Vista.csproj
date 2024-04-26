@@ -113,12 +113,6 @@
     <Compile Include="frmAEVenta.Designer.cs">
       <DependentUpon>frmAEVenta.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmImprimir.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmImprimir.Designer.cs">
-      <DependentUpon>frmImprimir.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +124,12 @@
     </Compile>
     <Compile Include="frmMenu.Designer.cs">
       <DependentUpon>frmMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPantallaCarga.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPantallaCarga.Designer.cs">
+      <DependentUpon>frmPantallaCarga.cs</DependentUpon>
     </Compile>
     <Compile Include="frmProductos.cs">
       <SubType>Form</SubType>
@@ -158,14 +158,14 @@
     <EmbeddedResource Include="frmAEVenta.resx">
       <DependentUpon>frmAEVenta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmImprimir.resx">
-      <DependentUpon>frmImprimir.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMenu.resx">
       <DependentUpon>frmMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPantallaCarga.resx">
+      <DependentUpon>frmPantallaCarga.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmProductos.resx">
       <DependentUpon>frmProductos.cs</DependentUpon>
@@ -218,6 +218,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\decoration.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\load_screen.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\load_screen2.jpeg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

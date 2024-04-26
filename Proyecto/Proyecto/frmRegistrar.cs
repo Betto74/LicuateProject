@@ -23,7 +23,8 @@ namespace PROYECTO_U3
             r.RedondearBoton(btnAceptar, 30);
             r.RedondearBoton(btnVolver, 30);
 
-            this.login = login; 
+            this.login = login;
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void lblTittle_Click(object sender, EventArgs e)

@@ -17,7 +17,7 @@ namespace PROYECTO_U3
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmLogin());
+             Application.Run(new frmPantallaCarga());
         }
     }
 }

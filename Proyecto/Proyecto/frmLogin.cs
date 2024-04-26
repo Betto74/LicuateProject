@@ -13,17 +13,24 @@ using Modelos;
 
 namespace PROYECTO_U3
 {
+    
     public partial class frmLogin : Form
     {
         private bool cargo;
         public Usuario user;
-        public frmLogin()
+
+        frmPantallaCarga carga;
+        public frmLogin(frmPantallaCarga carga)
         {
             InitializeComponent();
           
             Redondear r = new Redondear();
             r.RedondearPicture(ptbBack, 40);
             r.RedondearBoton(btnAceptar, 30);
+
+            this.carga = carga;
+
+            this.StartPosition = FormStartPosition.CenterScreen;
 
         }
         
@@ -60,8 +67,11 @@ namespace PROYECTO_U3
                 MessageBox.Show(this, "El usuario o el password son incorrectos");
             }
         }
-        
-       
+
+        private void frmLogin_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            carga.Close();
+        }
     }
 
 }
