@@ -205,12 +205,19 @@ namespace PROYECTO_U3
                 return;
             }
 
-            if (string.IsNullOrEmpty(txtExtra.Text))
+            if (!string.IsNullOrEmpty(txtExtra.Text) && (!int.TryParse(txtExtra.Text, out int z) || z < 0 ))
             {
-                txtExtra.Text = "0";
+                MessageBox.Show("El extra debe ser un valor numerico mayor a 0");
+                return;
             }
 
-            
+            if (!string.IsNullOrEmpty(txtExtra.Text) && string.IsNullOrEmpty(txtCom.Text))
+            {
+                MessageBox.Show("Deber justificar el precio extra");
+                return;
+            }
+
+            txtExtra.Text = "0";
 
             //Generar detalle
             DetallesVenta dv = new DetallesVenta()
@@ -338,12 +345,28 @@ namespace PROYECTO_U3
             lblPIva.Text = "$" + subtotal*.16;
             lblPTotal.Text = "$" + subtotal;
 
-            txtCantidad.Text = "0";
+            txtCantidad.Text = "";
             txtCom.Text = "";
             txtExtra.Text = "";
             cbxProducto.SelectedIndex = -1;
             cbxCategoria.SelectedItem = "Todas";
         }
+
+        private void txtExtra_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void frmAEVenta_Load(object sender, EventArgs e)
+        {
+
+        }
+
         //Filtro por categorias
         private void cbxCategoria_SelectedIndexChanged_1(object sender, EventArgs e)
         {

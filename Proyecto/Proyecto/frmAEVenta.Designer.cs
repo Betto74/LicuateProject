@@ -66,6 +66,7 @@
             this.pictureBox1.Size = new System.Drawing.Size(1084, 183);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // dgvOrden
             // 
@@ -204,7 +205,7 @@
             this.txtExtra.Name = "txtExtra";
             this.txtExtra.Size = new System.Drawing.Size(132, 29);
             this.txtExtra.TabIndex = 11;
-            this.txtExtra.Text = "0";
+            this.txtExtra.TextChanged += new System.EventHandler(this.txtExtra_TextChanged);
             // 
             // btnAceptar
             // 
@@ -396,6 +397,7 @@
             this.Name = "frmAEVenta";
             this.Text = "frmAEVenta";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmAEVenta_FormClosed);
+            this.Load += new System.EventHandler(this.frmAEVenta_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrden)).EndInit();
             this.ResumeLayout(false);

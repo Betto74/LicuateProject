@@ -84,8 +84,8 @@ namespace PROYECTO_U3
                 MessageBox.Show("Debe escoger alguna categoria");
                 return;
             }
-
-            if (!double.TryParse(txtPrecio.Text, out double x))
+            double x = -1;
+            if (!double.TryParse(txtPrecio.Text, out x) || x < 0)
             {
                 MessageBox.Show("El precio deber ser un valor numerico");
                 return;
