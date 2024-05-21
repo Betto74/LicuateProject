@@ -18,22 +18,25 @@ namespace PROYECTO_U3
     {
         frmLogin login;
         Producto producto;
-        Boolean bandera;      
-        public frmAEProductos(Producto producto, frmLogin login)
+        List<Producto> invProductos;
+        Boolean bandera;
+        public frmAEProductos(List<Producto> products, Producto producto, frmLogin login)
         {
             InitializeComponent();
             fillData(producto);
             this.login = login;
-            this.producto = producto;   
+            this.producto = producto;
+            this.invProductos = products;
             bandera = false;
             this.StartPosition = FormStartPosition.CenterScreen;
 
         }
 
-        public frmAEProductos(frmLogin login)
+        public frmAEProductos(List<Producto> products, frmLogin login)
         {
             InitializeComponent();
             this.login = login;
+            this.invProductos = products;
             bandera = true;
             this.StartPosition = FormStartPosition.CenterScreen;
         }
@@ -85,7 +88,7 @@ namespace PROYECTO_U3
                 return;
             }
             double x = -1;
-            if (!double.TryParse(txtPrecio.Text, out x) || x < 0)
+            if (!double.TryParse(txtPrecio.Text, out x) || x <= 0)
             {
                 MessageBox.Show("El precio deber ser un valor numerico");
                 return;
@@ -93,12 +96,18 @@ namespace PROYECTO_U3
 
             Producto prd = new Producto()
             {
-                NOMBRE = txtNombre.Text,
+                NOMBRE = txtNombre.Text.ToLower(),
                 DESCRIPCION = txtDescripcion.Text,
                 CATEGORIA = cbxCategoria.SelectedItem.ToString(),
                 PRECIO = Convert.ToDouble(txtPrecio.Text)
 
             };
+            int indice = invProductos.FindIndex(z => z.NOMBRE.Equals(prd.NOMBRE) && z.CATEGORIA.Equals(prd.CATEGORIA));
+            if (indice >= 0)
+            {
+                MessageBox.Show("Este producto ya existe, por favor ingrese un nombre nuevo");
+                return;
+            }
             // add
             if (bandera)
             {

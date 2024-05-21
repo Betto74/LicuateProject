@@ -80,7 +80,7 @@ namespace Datos
                 try
                 {
 
-                    String select = @"SELECT * FROM PRODUCTS";
+                    String select = @"SELECT* FROM PRODUCTS ORDER BY NOMBRE";
 
                     //Definir un datatable para que sea llenado
                     DataTable dt = new DataTable();

@@ -30,7 +30,7 @@ namespace PROYECTO_U3
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             ae = true;
-            frmAEProductos aep = new frmAEProductos(login);
+            frmAEProductos aep = new frmAEProductos(invProductos,login);
             aep.Show();
             this.Close();
         }
@@ -42,7 +42,7 @@ namespace PROYECTO_U3
                 // Obtener la primera fila seleccionada (en caso de que haya múltiples filas seleccionadas)
                 int index = dgvProductos.SelectedRows[0].Index;
                 ae = true;
-                frmAEProductos aep = new frmAEProductos(invProductos[index], login);
+                frmAEProductos aep = new frmAEProductos(invProductos, invProductos[index], login);
                 aep.Show();
                 this.Close();
                 

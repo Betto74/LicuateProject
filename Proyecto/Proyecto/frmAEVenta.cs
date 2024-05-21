@@ -217,7 +217,7 @@ namespace PROYECTO_U3
                 return;
             }
 
-            txtExtra.Text = "0";
+            if(string.IsNullOrEmpty(txtExtra.Text)) txtExtra.Text = "0";
 
             //Generar detalle
             DetallesVenta dv = new DetallesVenta()
